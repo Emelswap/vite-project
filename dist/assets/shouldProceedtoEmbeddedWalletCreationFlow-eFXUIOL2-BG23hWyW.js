@@ -1,0 +1,1 @@
+import{D as e,d as t}from"./index-DbvclLf3.js";var n=(n,r)=>e(n,r.ethereum.createOnLogin)||t(n,r.solana.createOnLogin);export{n as t};
