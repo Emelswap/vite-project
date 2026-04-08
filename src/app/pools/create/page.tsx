@@ -9,6 +9,7 @@ export default function CreatePoolPage() {
     { label: '0.30%', sub: 'STANDARD', spacing: '60', popular: false },
     { label: '1.00%', sub: 'EXOTIC', spacing: '200', popular: false },
   ];
+  
 
   return (
     <main className="relative pt-16 pb-40 px-4 flex flex-col items-center">
