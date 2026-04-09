@@ -10,9 +10,14 @@
   --color-tertiary-dim: #d2e45c;
   
   --font-inter: "Inter", sans-serif;
-  --radius-DEFAULT: 1.5rem;
-  --radius-lg: 2.5rem;
-  --radius-xl: 3.5rem;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-DEFAULT: 0px;
+  --radius-full: 0px;
 }
 
 :root {

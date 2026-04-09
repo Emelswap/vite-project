@@ -10,6 +10,22 @@ export default function CreatePoolPage() {
     { label: '1.00%', sub: 'EXOTIC', spacing: '200', popular: false },
   ];
 
+  const [tokenA] = useState({
+    symbol: 'ETH',
+    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    icon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuACACtYioQgw1RHiHAmL_mdMRtsJ1yqlEmuC753zaQTvqFbQSTL5m3W_Z-a92YMeG6CA-TD3PDUdH8GVQAPDc1BZTQqtBXRwbVAT_7w8XQ_FescRa72XkQdTNV6iFr9at7DCJkkGTeCj6p2m08aKGZWMhmpYkqeXeKMGSDZ0mqiASWQEOgdljvCkJbpltfmFdfHxgoh94mQEP0Mdp2CMEMzjtYS3WHrMUquwewzix_JoSimjilvGFB2m_fp46qxrXj9KkDevA0XY7N5',
+  });
+
+  const [tokenB] = useState({
+    symbol: 'DAI',
+    address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    icon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCIBZTlxrrUPshZlD2Y8nI6D0SbZVkkipLnuBB6xosA6jnsxuShdpERDyBhwKR1D9dCPC2VTU7_yZnREWvvaFIizOk9Fb4W4ogx-qETPNq9v2RHR9xXQHwYnVTKM3uLphoYb0tNjEgH6BdWbLjCLkWWuS8MYKyIAY9ohcTntpIrQVtgT2Vy17m20S0V_MnblzfO9mAliDZyiU0DMRGLTnJzPvBuFfV9_7kz9o4f4YiSUUknMX6cUSc2FbnHv4B-lrXbz4MJGOskUuKC',
+  });
+
+  const isTokenA0 = tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
+  const token0 = isTokenA0 ? tokenA : tokenB;
+  const token1 = isTokenA0 ? tokenB : tokenA;
+
   return (
     <main className="pt-8 pb-40 px-6 max-w-6xl mx-auto relative z-10 flex flex-col items-center">
 
@@ -27,22 +43,22 @@ export default function CreatePoolPage() {
       <div className="w-full max-w-xl glass-morphism p-8 rounded-lg relative z-10">
 
         {/* Select Pair Section */}
-        <div className="space-y-4 mb-8">
+        <div className="space-y-4 mb-4">
           <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/30 px-1">Select Pair</label>
           <div className="grid grid-cols-1 gap-3">
-            {/* Currency 0 */}
+            {/* Currency A */}
             <div className="bg-white/[0.03] border border-white/[0.05] p-4 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full border-[2px] border-black overflow-hidden bg-black relative z-10">
                   <img
                     className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
-                    alt="ETH"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuACACtYioQgw1RHiHAmL_mdMRtsJ1yqlEmuC753zaQTvqFbQSTL5m3W_Z-a92YMeG6CA-TD3PDUdH8GVQAPDc1BZTQqtBXRwbVAT_7w8XQ_FescRa72XkQdTNV6iFr9at7DCJkkGTeCj6p2m08aKGZWMhmpYkqeXeKMGSDZ0mqiASWQEOgdljvCkJbpltfmFdfHxgoh94mQEP0Mdp2CMEMzjtYS3WHrMUquwewzix_JoSimjilvGFB2m_fp46qxrXj9KkDevA0XY7N5"
+                    alt={tokenA.symbol}
+                    src={tokenA.icon}
                   />
                 </div>
                 <div>
-                  <div className="text-xl font-black text-white tracking-tight">ETH</div>
-                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">0xbhj...xgfhd</div>
+                  <div className="text-xl font-black text-white tracking-tight">{tokenA.symbol}</div>
+                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenA.address.slice(0, 6)}...${tokenA.address.slice(-4)}`}</div>
                 </div>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors">
@@ -50,25 +66,39 @@ export default function CreatePoolPage() {
               </button>
             </div>
 
-            {/* Currency 1 */}
+            {/* Currency B */}
             <div className="bg-white/[0.03] border border-white/[0.05] p-4 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
               <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full border-[2px] border-black overflow-hidden bg-black relative z-10">
                   <img
                     className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
-                    alt="DAI"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIBZTlxrrUPshZlD2Y8nI6D0SbZVkkipLnuBB6xosA6jnsxuShdpERDyBhwKR1D9dCPC2VTU7_yZnREWvvaFIizOk9Fb4W4ogx-qETPNq9v2RHR9xXQHwYnVTKM3uLphoYb0tNjEgH6BdWbLjCLkWWuS8MYKyIAY9ohcTntpIrQVtgT2Vy17m20S0V_MnblzfO9mAliDZyiU0DMRGLTnJzPvBuFfV9_7kz9o4f4YiSUUknMX6cUSc2FbnHv4B-lrXbz4MJGOskUuKC"
+                    alt={tokenB.symbol}
+                    src={tokenB.icon}
                   />
                 </div>
                 <div>
-                  <div className="text-xl font-black text-white tracking-tight">DAI</div>
-                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">0xa2e...z9p8q</div>
+                  <div className="text-xl font-black text-white tracking-tight">{tokenB.symbol}</div>
+                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenB.address.slice(0, 6)}...${tokenB.address.slice(-4)}`}</div>
                 </div>
               </div>
               <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors">
                 <span className="material-symbols-outlined text-sm">content_copy</span>
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Token0 / Token1 Order */}
+        <div className="bg-white/[0.02] border border-white/5 p-4 rounded-lg mb-8 flex flex-col gap-2 relative overflow-hidden">
+          <div className="flex items-center gap-4">
+            <span className="text-[10px] font-black uppercase text-primary tracking-widest w-16">Token0:</span>
+            <span className="text-[10px] font-mono text-white/60 uppercase tracking-widest">{token0.address}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-white/80 ml-auto">{token0.symbol}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-[10px] font-black uppercase text-white/30 tracking-widest w-16">Token1:</span>
+            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{token1.address}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-white/60 ml-auto">{token1.symbol}</span>
           </div>
         </div>
 

@@ -2,16 +2,25 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
 import { usePrivy } from '@privy-io/react-auth';
-import { Menu, X, Wallet, LogOut, ArrowRight } from 'lucide-react';
+import { Menu, X, Wallet, LogOut, ArrowRight, Copy, Check } from 'lucide-react';
 
 
 export default function Navbar() {
   const { login, authenticated, user, logout } = usePrivy();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { pathname } = useLocation();
+  const [copied, setCopied] = useState(false);
 
   const wallet = user?.wallet?.address;
   const shortAddress = wallet ? `${wallet.substring(0, 6)}...${wallet.substring(wallet.length - 4)}` : '';
+
+  const handleCopy = () => {
+    if (wallet) {
+      navigator.clipboard.writeText(wallet);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   const navLinks = [
     { label: 'Swap', href: '/' },
@@ -62,19 +71,28 @@ export default function Navbar() {
                 </>
               ) : (
                 <div className="flex items-center gap-4">
-                  <div className="bg-white text-black px-5 py-2.5 rounded-full flex items-center gap-4 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                  <div className="bg-white border border-transparent text-black px-5 h-11 rounded-full flex items-center gap-4 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                     <div className="flex items-center gap-2 pr-4 border-r border-black/10">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                      <span className="text-[9px] font-black uppercase tracking-widest">Arc Testnet</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Arc Testnet</span>
                     </div>
-                    <span className="font-mono text-[11px] font-bold tracking-tighter">
-                      {shortAddress}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[11px] font-bold tracking-tighter">
+                        {shortAddress}
+                      </span>
+                      <button 
+                        onClick={handleCopy} 
+                        className="text-black/40 hover:text-black hover:scale-110 active:scale-95 transition-all"
+                        title="Copy Address"
+                      >
+                        {copied ? <Check size={12} /> : <Copy size={12} />}
+                      </button>
+                    </div>
                   </div>
                   
                   <button 
                     onClick={logout}
-                    className="bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/50 hover:text-red-400 text-white/50 px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-[0.2em] transition-all"
+                    className="bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/50 hover:text-red-400 text-white/50 px-6 h-11 rounded-full flex items-center justify-center font-black text-[10px] uppercase tracking-[0.2em] transition-all"
                   >
                     Disconnect
                   </button>
@@ -144,12 +162,21 @@ export default function Navbar() {
                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
                   </div>
                   <div className="flex items-center gap-4 pt-2">
-                    <div className="w-12 h-12 rounded-xl bg-black/5 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-black/5 flex items-center justify-center shrink-0">
                       <Wallet size={24} className="opacity-20" />
                     </div>
-                    <div>
-                      <p className="font-mono text-lg font-bold tracking-tighter">{shortAddress}</p>
-                      <p className="text-[10px] font-black uppercase text-black/30 tracking-widest">Arc Testnet</p>
+                    <div className="flex-1 flex items-center justify-between">
+                      <div>
+                        <p className="font-mono text-lg font-bold tracking-tighter">{shortAddress}</p>
+                        <p className="text-[10px] font-black uppercase text-black/30 tracking-widest">Arc Testnet</p>
+                      </div>
+                      <button 
+                        onClick={handleCopy} 
+                        className="w-10 h-10 flex items-center justify-center rounded-full text-black/20 hover:text-black hover:bg-black/5 hover:scale-105 active:scale-95 transition-all outline-none"
+                        title="Copy Address"
+                      >
+                        {copied ? <Check size={18} /> : <Copy size={18} />}
+                      </button>
                     </div>
                   </div>
                 </div>

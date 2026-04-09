@@ -32,12 +32,14 @@ export default function SwapPage() {
                   className="bg-transparent border-none p-0 text-3xl font-black text-white focus:ring-0 focus:outline-none w-full placeholder:text-white/10"
                   placeholder="0.00"
                 />
-                <button className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10 transition-all shrink-0">
-                  <div className="w-6 h-6 rounded-full bg-white/10 overflow-hidden">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It" alt="ETH" className="w-full h-full object-contain" />
+                <button className="flex items-center justify-between gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 border border-white/10 transition-all shrink-0 w-32">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-white/10 overflow-hidden shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It" alt="ETH" className="w-full h-full object-contain" />
+                    </div>
+                    <span className="font-black text-xs uppercase tracking-widest text-white">ETH</span>
                   </div>
-                  <span className="font-black text-xs uppercase tracking-widest text-white">ETH</span>
-                  <ChevronDown size={14} className="text-white/40" />
+                  <ChevronDown size={14} className="text-white/40 shrink-0" />
                 </button>
               </div>
             </div>
@@ -63,12 +65,14 @@ export default function SwapPage() {
                   className="bg-transparent border-none p-0 text-3xl font-black text-white/40 focus:ring-0 focus:outline-none w-full"
                   placeholder="0.00"
                 />
-                <button className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10 transition-all shrink-0">
-                  <div className="w-6 h-6 rounded-full bg-white/10 overflow-hidden">
-                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBloYkWcAZ6nPHwnmfr57eTpo9sQHjaPnq1pOAEahqybC22VT7cuyiepuqlQxTcbSBZWhCoIeGUkF4SDg4ujaMebFNeZozVwNLw3YEYuyeQi18wPDMjSvuKmYeePF6IFZLtG4qtswQf3z0TvGOOdNC6RVS_AXRLVTlaptmOzoPoC8tQNeXJkNFcCNS8wO9mxPgY9RgGPFN5FfRIF8vZgxnP8mn0sCLN_IFvdxkbCD7L-V_UVNWhc0agxbWvwV63hi5VKn0dqAerM1fd" alt="USDC" className="w-full h-full object-contain" />
+                <button className="flex items-center justify-between gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 border border-white/10 transition-all shrink-0 w-32">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-white/10 overflow-hidden shrink-0">
+                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBloYkWcAZ6nPHwnmfr57eTpo9sQHjaPnq1pOAEahqybC22VT7cuyiepuqlQxTcbSBZWhCoIeGUkF4SDg4ujaMebFNeZozVwNLw3YEYuyeQi18wPDMjSvuKmYeePF6IFZLtG4qtswQf3z0TvGOOdNC6RVS_AXRLVTlaptmOzoPoC8tQNeXJkNFcCNS8wO9mxPgY9RgGPFN5FfRIF8vZgxnP8mn0sCLN_IFvdxkbCD7L-V_UVNWhc0agxbWvwV63hi5VKn0dqAerM1fd" alt="USDC" className="w-full h-full object-contain" />
+                    </div>
+                    <span className="font-black text-xs uppercase tracking-widest text-white">USDC</span>
                   </div>
-                  <span className="font-black text-xs uppercase tracking-widest text-white">USDC</span>
-                  <ChevronDown size={14} className="text-white/40" />
+                  <ChevronDown size={14} className="text-white/40 shrink-0" />
                 </button>
               </div>
             </div>
