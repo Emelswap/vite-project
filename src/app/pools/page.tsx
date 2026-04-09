@@ -14,6 +14,7 @@ export default function PoolsPage() {
       fee: '0.05%', 
       tvl: '$124.5M', 
       volume24h: '$42.1M', 
+      volTrend: '+12.4%',
       apr: '18.4%',
       token0: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
       token1: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -28,6 +29,7 @@ export default function PoolsPage() {
       fee: '0.3%', 
       tvl: '$18.2M', 
       volume24h: '$5.4M', 
+      volTrend: '+4.2%',
       apr: '42.6%',
       token0: '0x8888...8888',
       token1: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -43,6 +45,7 @@ export default function PoolsPage() {
       fee: '0.3%', 
       tvl: '$45.8M', 
       volume24h: '$12.1M', 
+      volTrend: '-2.1%',
       apr: '12.2%',
       token0: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
       token1: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -118,8 +121,8 @@ export default function PoolsPage() {
             <div className="col-span-2 text-[10px] font-black text-white/30 uppercase tracking-widest">Pool Pair</div>
             <div className="text-[10px] font-black text-white/30 uppercase tracking-widest text-right">TVL</div>
             <div className="text-[10px] font-black text-white/30 uppercase tracking-widest text-right">Volume 24H</div>
+            <div className="text-[10px] font-black text-white/30 uppercase tracking-widest text-right">24H Trend</div>
             <div className="text-[10px] font-black text-white/30 uppercase tracking-widest text-right">APR</div>
-            <div className="text-[10px] font-black text-white/30 uppercase tracking-widest text-right">Action</div>
           </div>
 
           {/* Pool Rows */}
@@ -141,7 +144,7 @@ export default function PoolsPage() {
                       <span className="bg-primary/20 text-primary text-[9px] font-black px-2 py-0.5 rounded uppercase animate-pulse">Hot</span>
                     )}
                   </div>
-                  <p className="text-[10px] text-white/10 font-mono mt-1 group-hover:text-white/30 transition-colors uppercase tracking-widest">Core LP</p>
+                  
                 </div>
               </div>
               <div className="flex md:block justify-between items-center mt-6 md:mt-0">
@@ -150,17 +153,23 @@ export default function PoolsPage() {
               </div>
               <div className="flex md:block justify-between items-center mt-2 md:mt-0">
                 <span className="md:hidden text-[9px] font-black text-white/30 uppercase">Volume</span>
-                <p className="text-lg font-black text-white text-right tracking-tight">{pool.volume24h}</p>
+                <p className="text-lg font-black text-white text-right tracking-tight leading-none">{pool.volume24h}</p>
+              </div>
+              <div className="flex md:block justify-between items-center mt-2 md:mt-0">
+                <span className="md:hidden text-[9px] font-black text-white/30 uppercase">Trend</span>
+                <div className="text-right">
+                  {pool.volTrend ? (
+                    <p className={`text-lg font-black tracking-tight ${pool.volTrend.startsWith('-') ? 'text-red-400' : 'text-emerald-400'}`}>
+                      {pool.volTrend}
+                    </p>
+                  ) : <p className="text-lg font-black text-white/20 tracking-tight">-</p>}
+                </div>
               </div>
               <div className="flex md:block justify-between items-center mt-2 md:mt-0">
                 <span className="md:hidden text-[9px] font-black text-white/30 uppercase">APR</span>
                 <p className="text-lg font-black text-tertiary-dim text-right tracking-tight">{pool.apr}</p>
               </div>
-              <div className="flex justify-end mt-6 md:mt-0">
-                <button className="bg-white/5 border border-white/10 hover:border-primary/50 text-white/60 hover:text-primary px-10 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all">
-                  ADD
-                </button>
-              </div>
+              
             </div>
           ))}
           {filteredPools.length === 0 && (

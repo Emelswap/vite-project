@@ -2,6 +2,20 @@ import { useState } from 'react';
 
 export default function CreatePoolPage() {
   const [feeTier, setFeeTier] = useState('0.30%');
+  const [startingRatio, setStartingRatio] = useState('1:1');
+  const [copiedA, setCopiedA] = useState(false);
+  const [copiedB, setCopiedB] = useState(false);
+
+  const copyToken = (address: string, isA: boolean) => {
+    navigator.clipboard.writeText(address);
+    if (isA) {
+      setCopiedA(true);
+      setTimeout(() => setCopiedA(false), 2000);
+    } else {
+      setCopiedB(true);
+      setTimeout(() => setCopiedB(false), 2000);
+    }
+  };
 
   const feeTiers = [
     { label: '0.01%', sub: 'STABLE', spacing: '1', popular: false },
@@ -34,9 +48,6 @@ export default function CreatePoolPage() {
         <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white uppercase mb-4">
           Create Pool
         </h1>
-        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">
-          Deploy a new liquidity position with industrial precision.
-        </p>
       </div>
 
       {/* Create Pool Monolith */}
@@ -61,8 +72,12 @@ export default function CreatePoolPage() {
                   <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenA.address.slice(0, 6)}...${tokenA.address.slice(-4)}`}</div>
                 </div>
               </div>
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors">
-                <span className="material-symbols-outlined text-sm">content_copy</span>
+              <button 
+                onClick={() => copyToken(tokenA.address, true)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
+                title="Copy Address"
+              >
+                <span className="material-symbols-outlined text-sm">{copiedA ? 'check' : 'content_copy'}</span>
               </button>
             </div>
 
@@ -81,8 +96,12 @@ export default function CreatePoolPage() {
                   <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenB.address.slice(0, 6)}...${tokenB.address.slice(-4)}`}</div>
                 </div>
               </div>
-              <button className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors">
-                <span className="material-symbols-outlined text-sm">content_copy</span>
+              <button 
+                onClick={() => copyToken(tokenB.address, false)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
+                title="Copy Address"
+              >
+                <span className="material-symbols-outlined text-sm">{copiedB ? 'check' : 'content_copy'}</span>
               </button>
             </div>
           </div>
@@ -139,7 +158,8 @@ export default function CreatePoolPage() {
             {['1:1', '2:1', '1:2', 'CUSTOM'].map((opt) => (
               <button
                 key={opt}
-                className={`py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${opt === 'CUSTOM'
+                onClick={() => setStartingRatio(opt)}
+                className={`py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${startingRatio === opt
                     ? 'bg-primary/10 border border-primary/30 text-primary'
                     : 'bg-white/[0.03] border border-white/5 hover:border-white/10 text-white/40 hover:text-white'
                   }`}
@@ -148,46 +168,31 @@ export default function CreatePoolPage() {
               </button>
             ))}
           </div>
-          <div className="flex items-center justify-center space-x-4 bg-white/[0.02] border border-white/[0.05] p-4 rounded-lg">
-            <div className="relative w-full">
-              <input
-                className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
-                type="text"
-                defaultValue="1"
-              />
+          {startingRatio === 'CUSTOM' && (
+            <div className="flex items-center justify-center space-x-4 bg-white/[0.02] border border-white/[0.05] p-4 rounded-lg animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="relative w-full">
+                <input
+                  className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
+                  type="text"
+                  defaultValue="1"
+                />
+              </div>
+              <span className="text-primary font-black text-2xl">:</span>
+              <div className="relative w-full">
+                <input
+                  className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
+                  type="text"
+                  defaultValue="1"
+                />
+              </div>
             </div>
-            <span className="text-primary font-black text-2xl">:</span>
-            <div className="relative w-full">
-              <input
-                className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
-                type="text"
-                defaultValue="1"
-              />
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Primary Action */}
         <button className="w-full bg-primary text-black font-black tracking-[0.2em] uppercase py-5 rounded-full text-[10px] gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3">
           Initialize Pool
         </button>
-      </div>
-
-      {/* Footer Information Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 w-full max-w-4xl relative z-10">
-        {[
-          { icon: 'trending_down', title: 'Impermanent Loss', desc: 'Advanced protection algorithms to minimize divergence loss.' },
-          { icon: 'speed', title: 'Gas Optimized', desc: 'Contract logic minimized for sub-micro transaction overhead.' },
-          { icon: 'verified_user', title: 'Multi-Audit', desc: 'Triple-vetted by industry leads to ensure smart contract safety.' }
-        ].map((card, i) => (
-          <div key={i} className="glass-morphism p-6 rounded-lg group hover:scale-[1.02] transition-transform cursor-pointer border border-white/[0.02] hover:border-white/10">
-            <div className="bg-white/[0.03] border border-white/5 w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-primary transition-transform group-hover:rotate-12">
-              <span className="material-symbols-outlined">{card.icon}</span>
-            </div>
-            <h3 className="text-[11px] font-black mb-2 text-white uppercase tracking-[0.1em]">{card.title}</h3>
-            <p className="text-[10px] text-white/40 leading-relaxed uppercase tracking-widest">{card.desc}</p>
-          </div>
-        ))}
       </div>
     </main>
   );
