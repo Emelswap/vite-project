@@ -1,17 +1,36 @@
 
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { ethers } from 'ethers';
 
 export default function PoolsPage() {
+  const navigate = useNavigate();
   const [addressSearch, setAddressSearch] = useState('');
+
+  const computePoolId = (poolKey: { currency0: string; currency1: string; fee: number; tickSpacing: number; hooks: string }) => {
+    const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
+      ["address", "address", "uint24", "int24", "address"],
+      [
+        poolKey.currency0,
+        poolKey.currency1,
+        poolKey.fee,
+        poolKey.tickSpacing,
+        poolKey.hooks,
+      ]
+    );
+    return ethers.keccak256(encoded);
+  };
   
   const pools = [
     { 
       id: 1, 
       pair: 'ETH / USDC', 
       fee: '0.05%', 
+      rawFee: 500,
+      tickSpacing: 10,
+      hooks: ethers.ZeroAddress,
       tvl: '$124.5M', 
       volume24h: '$42.1M', 
       volTrend: '+12.4%',
@@ -27,11 +46,14 @@ export default function PoolsPage() {
       id: 2, 
       pair: 'EMEL / ETH', 
       fee: '0.3%', 
+      rawFee: 3000,
+      tickSpacing: 60,
+      hooks: ethers.ZeroAddress,
       tvl: '$18.2M', 
       volume24h: '$5.4M', 
       volTrend: '+4.2%',
       apr: '42.6%',
-      token0: '0x8888...8888',
+      token0: '0x8888888888888888888888888888888888888888',
       token1: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
       isHot: true,
       imgs: [
@@ -43,6 +65,9 @@ export default function PoolsPage() {
       id: 3, 
       pair: 'WBTC / ETH', 
       fee: '0.3%', 
+      rawFee: 3000,
+      tickSpacing: 60,
+      hooks: ethers.ZeroAddress,
       tvl: '$45.8M', 
       volume24h: '$12.1M', 
       volTrend: '-2.1%',
@@ -126,8 +151,20 @@ export default function PoolsPage() {
           </div>
 
           {/* Pool Rows */}
-          {filteredPools.map((pool) => (
-            <div key={pool.id} className="grid grid-cols-1 md:grid-cols-6 p-6 items-center border-b border-white/[0.05] hover:bg-white/[0.03] transition-all duration-300 group last:border-0 cursor-pointer">
+          {filteredPools.map((pool) => {
+            const computedId = computePoolId({
+              currency0: pool.token0,
+              currency1: pool.token1,
+              fee: pool.rawFee,
+              tickSpacing: pool.tickSpacing,
+              hooks: pool.hooks
+            });
+            return (
+            <div 
+              key={pool.id} 
+              onClick={() => navigate(`/pools/${computedId}`)}
+              className="grid grid-cols-1 md:grid-cols-6 p-6 items-center border-b border-white/[0.05] hover:bg-white/[0.03] transition-all duration-300 group last:border-0 cursor-pointer"
+            >
               <div className="col-span-2 flex items-center gap-6">
                 <div className="flex -space-x-4">
                   {pool.imgs.map((img, i) => (
@@ -171,7 +208,8 @@ export default function PoolsPage() {
               </div>
               
             </div>
-          ))}
+            );
+          })}
           {filteredPools.length === 0 && (
             <div className="p-20 text-center text-white/20 font-black uppercase text-xs tracking-widest opacity-50">
               No pools found for this token address

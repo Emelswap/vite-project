@@ -8,6 +8,7 @@ import ProfilePage from "@/app/profile/page";
 import ActivityPage from "@/app/activity/page";
 import AddTokenPage from "@/app/add-token/page";
 import CreatePoolPage from "@/app/pools/create/page";
+import PoolDetailsPage from "@/app/pools/id/page";
 
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/pools" element={<PoolsPage />} />
           <Route path="/pools/create" element={<CreatePoolPage />} />
+          <Route path="/pools/:id" element={<PoolDetailsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/activity" element={<ActivityPage />} />
           <Route path="/add-token" element={<AddTokenPage />} />
