@@ -10,6 +10,15 @@ export default function PoolDetailsPage() {
   };
   const hookData = id && hooksMock[id] ? hooksMock[id] : hooksMock.default;
 
+  const token0Address = "0x0000000000000000000000000000000000000000"; // NATIVE
+  const token1Address = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; // USDC example
+
+  const getCurrencyParam = (address: string) => {
+    return (address === "0" || address === "0x0000000000000000000000000000000000000000") ? "NATIVE" : address;
+  };
+
+  const addLiquidityPath = `/positions/currency0=${getCurrencyParam(token0Address)}&currency1=${getCurrencyParam(token1Address)}`;
+
   return (
     <div className="pt-8 pb-40 px-6 max-w-7xl mx-auto relative z-10 flex flex-col items-center">
       {/* Abstract Background Mesh specific to details */}
@@ -52,9 +61,12 @@ export default function PoolDetailsPage() {
             <Link to="/" className="flex-1 md:flex-none border border-white/10 text-white px-8 py-3 font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center hover:bg-white/5 transition-all">
               Swap
             </Link>
-            <button className="flex-1 md:flex-none bg-primary text-black px-8 py-3 font-black text-[10px] uppercase tracking-[0.2em] transition-all gold-glow hover:brightness-110 active:scale-95">
+            <Link 
+              to={addLiquidityPath}
+              className="flex-1 md:flex-none bg-primary text-black px-8 py-3 font-black text-[10px] uppercase tracking-[0.2em] transition-all gold-glow hover:brightness-110 active:scale-95 flex items-center justify-center text-center"
+            >
               Add Liquidity
-            </button>
+            </Link>
           </div>
         </header>
 
