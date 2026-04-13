@@ -1,6 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { ChevronDown, Minus, Plus, Infinity } from 'lucide-react';
 import { useState } from 'react';
+import TokenSelector, { Token } from '@/components/TokenSelector';
+
+const TOKENS: Token[] = [
+  { symbol: 'ETH', name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', balance: '45.23', address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' },
+  { symbol: 'USDC', name: 'USD Coin', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', balance: '12,400.00', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48' },
+  { symbol: 'USDT', name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', balance: '5,120.50', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' },
+  { symbol: 'WBTC', name: 'Wrapped Bitcoin', logo: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png', balance: '1.24', address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' },
+  { symbol: 'DAI', name: 'Dai Stablecoin', logo: 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png', balance: '8,900.00', address: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
+];
 
 export default function PositionsPage() {
   const { params } = useParams<{ params: string }>();
@@ -8,6 +17,8 @@ export default function PositionsPage() {
   const [rangeType, setRangeType] = useState<'full' | 'custom'>('custom');
   const [strategy, setStrategy] = useState<'stable' | 'wide'>('wide');
   const [feeTier, setFeeTier] = useState('0.30%');
+  const [token0, setToken0] = useState<Token>(TOKENS[3]);
+  const [token1, setToken1] = useState<Token>(TOKENS[2]);
 
   const feeTiers = [
     { label: '0.01%', sub: 'STABLE', spacing: '1', popular: false },
@@ -38,33 +49,27 @@ export default function PositionsPage() {
 
           {/* Token Selectors */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div className="glass-morphism bg-white/[0.01] p-6 hover:bg-white/[0.03] transition-all group cursor-pointer border border-white/5 hover:border-white/20">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 bg-black flex items-center justify-center overflow-hidden border border-white/10">
-                    <img className="w-full h-full object-cover" alt="WBTC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa3Sy8aYOzCab94GSwR1VCQHbcLPD5uXgHVdDgQ8p1bHhrNhCCqDTnYo5Y07ex9XJzLasfABN14uU8KWfi4VR2n2pW1W-UrNABaKh4BhVsu54-HiqyRr57w5TJsmUMVGIxs8STfotJitCr_SoH-bAdxpdjvYcEUokuHF2r_B-nuBBcpsS2vCp26fnDiVzCqNY-YRrhUMYtMvtAP_DWMnuqonXYaHKvhDm277uPbOuylPzgntrIqukFZgnL-4HFLv2OY3ZCeUh2-iV5"/>
-                  </div>
-                  <div>
-                    <p className="text-xl font-black text-white">WBTC</p>
-                    <p className="text-xs font-mono text-white/40 tracking-widest">0x22...42c</p>
-                  </div>
-                </div>
-                <ChevronDown className="text-white/40 group-hover:text-white transition-colors" />
+            <div className="glass-morphism bg-white/[0.01] p-6 hover:bg-white/[0.03] transition-all group border border-white/5 hover:border-white/20 flex items-center justify-between">
+              <TokenSelector 
+                selectedToken={token0}
+                onSelect={setToken0}
+                tokens={TOKENS}
+              />
+              <div className="text-right">
+                <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{token0.address ? `${token0.address.slice(0, 6)}...${token0.address.slice(-4)}` : ''}</p>
+                <p className="text-[10px] font-mono text-white/10 uppercase tracking-widest mt-1">Token 0</p>
               </div>
             </div>
 
-            <div className="glass-morphism bg-white/[0.01] p-6 hover:bg-white/[0.03] transition-all group cursor-pointer border border-white/5 hover:border-white/20">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 bg-black flex items-center justify-center overflow-hidden border border-white/10">
-                    <img className="w-full h-full object-cover" alt="USDT" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHkpNHjUeRpeM61EzreUXkpGqxURYJMuSimUzJQQjJRopJFKIGB61ERH53etWQPI1QbxwcBSX46e-X2LVeYjDq1G7ebMKqYhYRcrILjg4SnsWnNniyw9wz9Ltl4o7KhiATsSTQ6yeVm-ACq2KwYD5dE4gr7XOSSP6VF5Qh5epev7hLasw3i_spKeDiiQprbsvj-VaAvmRo0IW01Zs5YYZ-5BX7w6T6JIUGsq3egTrnHynMFJL7KBIpI-UaZv4Hf6ABCBLE29cH0Ue_"/>
-                  </div>
-                  <div>
-                    <p className="text-xl font-black text-white">USDT</p>
-                    <p className="text-xs font-mono text-white/40 tracking-widest">0xdA...8f2</p>
-                  </div>
-                </div>
-                <ChevronDown className="text-white/40 group-hover:text-white transition-colors" />
+            <div className="glass-morphism bg-white/[0.01] p-6 hover:bg-white/[0.03] transition-all group border border-white/5 hover:border-white/20 flex items-center justify-between">
+              <TokenSelector 
+                selectedToken={token1}
+                onSelect={setToken1}
+                tokens={TOKENS}
+              />
+              <div className="text-right">
+                <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest">{token1.address ? `${token1.address.slice(0, 6)}...${token1.address.slice(-4)}` : ''}</p>
+                <p className="text-[10px] font-mono text-white/10 uppercase tracking-widest mt-1">Token 1</p>
               </div>
             </div>
           </div>

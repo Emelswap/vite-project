@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowDown, ChevronDown } from 'lucide-react';
 import TokenSelector, { Token } from '@/components/TokenSelector';
+import Toast from '@/components/Toast';
 
 const TOKENS: Token[] = [
   { symbol: 'ETH', name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', balance: '1.42' },
@@ -118,6 +119,28 @@ export default function SwapPage() {
             <span>Estimated Gas</span>
             <span className="text-white/40">$4.12</span>
           </div>
+        </div>
+        {/* Toast Demo Layer */}
+        <div className="fixed bottom-8 right-8 z-[100] flex flex-col gap-4 pointer-events-none">
+          <Toast 
+            type="pending"
+            title="Transaction Pending"
+            message="Swapping 2.45 ETH for 4,500.00 USDC..."
+            onClose={() => {}}
+          />
+          <Toast 
+            type="success"
+            title="Transaction Confirmed"
+            message="Successfully swapped 0.5 WBTC for 32,150.20 USDT"
+            txHash="0x123...abc"
+            onClose={() => {}}
+          />
+          <Toast 
+            type="error"
+            title="Transaction Failed"
+            message="Execution reverted: Insufficient liquidity for this trade pair. Please try a smaller amount."
+            onClose={() => {}}
+          />
         </div>
       </div>
     </div>
