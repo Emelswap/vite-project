@@ -152,22 +152,22 @@ export default function ActivityPage() {
 
                <div className="flex md:block justify-between items-center">
                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Type</span>
-                 <p className="font-bold text-sm text-white group-hover:text-primary transition-colors">{tx.type}</p>
+                 <p className="font-bold text-xs text-white group-hover:text-primary transition-colors">{tx.type}</p>
                </div>
 
                <div className="flex md:block justify-between items-center">
                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">USD</span>
-                 <p className="font-black text-sm text-white">{tx.usd}</p>
+                 <p className="font-black text-xs text-white">{tx.usd}</p>
                </div>
 
                <div className="flex md:block justify-between items-center">
                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Token0 Amount</span>
-                 <p className={`font-black text-xs tracking-tight ${tx.token0Amount.startsWith('-') ? 'text-white/60' : 'text-primary/90'}`}>{tx.token0Amount}</p>
+                 <p className={`font-black text-[11px] tracking-tight ${tx.token0Amount.startsWith('-') ? 'text-white/60' : 'text-primary/90'}`}>{tx.token0Amount}</p>
                </div>
 
                <div className="flex md:block justify-between items-center">
                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Token1 Amount</span>
-                 <p className={`font-black text-xs tracking-tight ${tx.token1Amount.startsWith('-') ? 'text-white/60' : 'text-primary/90'}`}>{tx.token1Amount}</p>
+                 <p className={`font-black text-[11px] tracking-tight ${tx.token1Amount.startsWith('-') ? 'text-white/60' : 'text-primary/90'}`}>{tx.token1Amount}</p>
                </div>
 
                <div className="flex md:block justify-between items-center md:text-right">
