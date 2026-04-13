@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, RefreshCw, ChevronDown, Flame, ArrowUpCircle, ArrowDownCircle, X, AlertTriangle, Wallet } from 'lucide-react';
+import TokenSelector, { Token } from '@/components/TokenSelector';
+
+const TOKENS: Token[] = [
+  { symbol: 'ETH', name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', balance: '45.23' },
+  { symbol: 'USDC', name: 'USD Coin', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', balance: '12,400.00' },
+  { symbol: 'USDT', name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', balance: '5,120.50' },
+  { symbol: 'WBTC', name: 'Wrapped Bitcoin', logo: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png', balance: '1.24' },
+  { symbol: 'DAI', name: 'Dai Stablecoin', logo: 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png', balance: '8,900.00' },
+];
 
 export default function PositionDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +21,8 @@ export default function PositionDetailsPage() {
   const [decreasePercent, setDecreasePercent] = useState(50);
   const [increasePercent0, setIncreasePercent0] = useState<number | null>(null);
   const [increasePercent1, setIncreasePercent1] = useState<number | null>(null);
+  const [token0, setToken0] = useState<Token>(TOKENS[0]);
+  const [token1, setToken1] = useState<Token>(TOKENS[1]);
 
   // Mock position data based on the ID
   const position = {
@@ -384,7 +395,7 @@ export default function PositionDetailsPage() {
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Deposit Amount</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: 45.2 ETH</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: {token0.balance} {token0.symbol}</span>
                     <div className="flex gap-2">
                        {[25, 50, 75, 100].map(p => (
                         <button 
@@ -406,10 +417,11 @@ export default function PositionDetailsPage() {
                     placeholder="0.0" 
                     className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
                   />
-                  <div className="flex items-center gap-2 bg-white/5 px-3 py-1 border border-white/10 uppercase">
-                    <img src={position.imgs[0]} className="w-4 h-4" />
-                    <span className="text-[10px] font-black text-white">ETH</span>
-                  </div>
+                  <TokenSelector 
+                    selectedToken={token0}
+                    onSelect={setToken0}
+                    tokens={TOKENS}
+                  />
                 </div>
               </div>
 
@@ -418,7 +430,7 @@ export default function PositionDetailsPage() {
                 <div className="flex justify-between items-center mb-3">
                   <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Deposit Amount</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: 12,400 USDC</span>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: {token1.balance} {token1.symbol}</span>
                     <div className="flex gap-2">
                       {[25, 50, 75, 100].map(p => (
                         <button 
@@ -440,10 +452,11 @@ export default function PositionDetailsPage() {
                     placeholder="0.0" 
                     className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
                   />
-                  <div className="flex items-center gap-2 bg-white/5 px-3 py-1 border border-white/10 uppercase">
-                    <img src={position.imgs[1]} className="w-4 h-4" />
-                    <span className="text-[10px] font-black text-white">USDC</span>
-                  </div>
+                  <TokenSelector 
+                    selectedToken={token1}
+                    onSelect={setToken1}
+                    tokens={TOKENS}
+                  />
                 </div>
               </div>
 

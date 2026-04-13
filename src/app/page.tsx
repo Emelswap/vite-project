@@ -1,12 +1,22 @@
-
 import { useState } from 'react';
 import { ArrowDown, ChevronDown } from 'lucide-react';
+import TokenSelector, { Token } from '@/components/TokenSelector';
+
+const TOKENS: Token[] = [
+  { symbol: 'ETH', name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', balance: '1.42' },
+  { symbol: 'USDC', name: 'USD Coin', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', balance: '4,102.00' },
+  { symbol: 'USDT', name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', balance: '5,120.50' },
+  { symbol: 'WBTC', name: 'Wrapped Bitcoin', logo: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png', balance: '0.042' },
+  { symbol: 'DAI', name: 'Dai Stablecoin', logo: 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png', balance: '8,900.00' },
+];
 
 export default function SwapPage() {
   const [fromAmount, setFromAmount] = useState('1.00');
   const [toAmount, setToAmount] = useState('2,431.12');
   const [slippage, setSlippage] = useState('5');
   const [isAutoSlippage, setIsAutoSlippage] = useState(true);
+  const [fromToken, setFromToken] = useState<Token>(TOKENS[0]);
+  const [toToken, setToToken] = useState<Token>(TOKENS[1]);
 
   return (
     <div className="flex-grow flex items-center justify-center px-4 pt-8 pb-40 relative">
@@ -22,7 +32,7 @@ export default function SwapPage() {
             <div className="bg-white/[0.03] p-6 rounded-none border border-white/5 hover:border-white/10 transition-all">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">You Pay</span>
-                <span className="text-[10px] font-bold text-white/40">Balance: 1.42 ETH</span>
+                <span className="text-[10px] font-bold text-white/40">Balance: {fromToken.balance} {fromToken.symbol}</span>
               </div>
               <div className="flex items-center justify-between gap-4">
                 <input 
@@ -32,15 +42,12 @@ export default function SwapPage() {
                   className="bg-transparent border-none p-0 text-3xl font-black text-white focus:ring-0 focus:outline-none w-full placeholder:text-white/10"
                   placeholder="0.00"
                 />
-                <button className="flex items-center justify-between gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 border border-white/10 transition-all shrink-0 w-32">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-white/10 overflow-hidden shrink-0">
-                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It" alt="ETH" className="w-full h-full object-contain" />
-                    </div>
-                    <span className="font-black text-xs uppercase tracking-widest text-white">ETH</span>
-                  </div>
-                  <ChevronDown size={14} className="text-white/40 shrink-0" />
-                </button>
+                <TokenSelector 
+                  selectedToken={fromToken}
+                  onSelect={setFromToken}
+                  tokens={TOKENS}
+                  className="shrink-0"
+                />
               </div>
             </div>
 
@@ -55,7 +62,7 @@ export default function SwapPage() {
             <div className="bg-white/[0.03] p-6 rounded-none border border-white/5 hover:border-white/10 transition-all">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">You Receive</span>
-                <span className="text-[10px] font-bold text-white/40">Balance: 4,102 USDC</span>
+                <span className="text-[10px] font-bold text-white/40">Balance: {toToken.balance} {toToken.symbol}</span>
               </div>
               <div className="flex items-center justify-between gap-4">
                 <input 
@@ -65,15 +72,12 @@ export default function SwapPage() {
                   className="bg-transparent border-none p-0 text-3xl font-black text-white/40 focus:ring-0 focus:outline-none w-full"
                   placeholder="0.00"
                 />
-                <button className="flex items-center justify-between gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 border border-white/10 transition-all shrink-0 w-32">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-white/10 overflow-hidden shrink-0">
-                      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBloYkWcAZ6nPHwnmfr57eTpo9sQHjaPnq1pOAEahqybC22VT7cuyiepuqlQxTcbSBZWhCoIeGUkF4SDg4ujaMebFNeZozVwNLw3YEYuyeQi18wPDMjSvuKmYeePF6IFZLtG4qtswQf3z0TvGOOdNC6RVS_AXRLVTlaptmOzoPoC8tQNeXJkNFcCNS8wO9mxPgY9RgGPFN5FfRIF8vZgxnP8mn0sCLN_IFvdxkbCD7L-V_UVNWhc0agxbWvwV63hi5VKn0dqAerM1fd" alt="USDC" className="w-full h-full object-contain" />
-                    </div>
-                    <span className="font-black text-xs uppercase tracking-widest text-white">USDC</span>
-                  </div>
-                  <ChevronDown size={14} className="text-white/40 shrink-0" />
-                </button>
+                <TokenSelector 
+                  selectedToken={toToken}
+                  onSelect={setToToken}
+                  tokens={TOKENS}
+                  className="shrink-0"
+                />
               </div>
             </div>
           </div>

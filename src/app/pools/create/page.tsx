@@ -1,12 +1,24 @@
 import { useState } from 'react';
+import TokenSelector, { Token } from '@/components/TokenSelector';
+
+const TOKENS: Token[] = [
+  { symbol: 'ETH', name: 'Ethereum', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png', balance: '45.23', address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' },
+  { symbol: 'USDC', name: 'USD Coin', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png', balance: '12,400.00', address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48' },
+  { symbol: 'USDT', name: 'Tether', logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png', balance: '5,120.50', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7' },
+  { symbol: 'WBTC', name: 'Wrapped Bitcoin', logo: 'https://cryptologos.cc/logos/wrapped-bitcoin-wbtc-logo.png', balance: '1.24', address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' },
+  { symbol: 'DAI', name: 'Dai Stablecoin', logo: 'https://cryptologos.cc/logos/multi-collateral-dai-dai-logo.png', balance: '8,900.00', address: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
+];
 
 export default function CreatePoolPage() {
   const [feeTier, setFeeTier] = useState('0.30%');
   const [startingRatio, setStartingRatio] = useState('1:1');
   const [copiedA, setCopiedA] = useState(false);
   const [copiedB, setCopiedB] = useState(false);
+  const [tokenA, setTokenA] = useState<Token>(TOKENS[0]);
+  const [tokenB, setTokenB] = useState<Token>(TOKENS[4]);
 
   const copyToken = (address: string, isA: boolean) => {
+    if (!address) return;
     navigator.clipboard.writeText(address);
     if (isA) {
       setCopiedA(true);
@@ -24,28 +36,16 @@ export default function CreatePoolPage() {
     { label: '1.00%', sub: 'EXOTIC', spacing: '200', popular: false },
   ];
 
-  const [tokenA] = useState({
-    symbol: 'ETH',
-    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    icon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuACACtYioQgw1RHiHAmL_mdMRtsJ1yqlEmuC753zaQTvqFbQSTL5m3W_Z-a92YMeG6CA-TD3PDUdH8GVQAPDc1BZTQqtBXRwbVAT_7w8XQ_FescRa72XkQdTNV6iFr9at7DCJkkGTeCj6p2m08aKGZWMhmpYkqeXeKMGSDZ0mqiASWQEOgdljvCkJbpltfmFdfHxgoh94mQEP0Mdp2CMEMzjtYS3WHrMUquwewzix_JoSimjilvGFB2m_fp46qxrXj9KkDevA0XY7N5',
-  });
-
-  const [tokenB] = useState({
-    symbol: 'DAI',
-    address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    icon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCIBZTlxrrUPshZlD2Y8nI6D0SbZVkkipLnuBB6xosA6jnsxuShdpERDyBhwKR1D9dCPC2VTU7_yZnREWvvaFIizOk9Fb4W4ogx-qETPNq9v2RHR9xXQHwYnVTKM3uLphoYb0tNjEgH6BdWbLjCLkWWuS8MYKyIAY9ohcTntpIrQVtgT2Vy17m20S0V_MnblzfO9mAliDZyiU0DMRGLTnJzPvBuFfV9_7kz9o4f4YiSUUknMX6cUSc2FbnHv4B-lrXbz4MJGOskUuKC',
-  });
-
-  const isTokenA0 = tokenA.address.toLowerCase() < tokenB.address.toLowerCase();
-  const token0 = isTokenA0 ? tokenA : tokenB;
-  const token1 = isTokenA0 ? tokenB : tokenA;
+  const isTokenA0 = (tokenA.address || '').toLowerCase() < (tokenB.address || '').toLowerCase();
+  const t0 = isTokenA0 ? tokenA : tokenB;
+  const t1 = isTokenA0 ? tokenB : tokenA;
 
   return (
     <main className="pt-8 pb-40 px-6 max-w-6xl mx-auto relative z-10 flex flex-col items-center">
 
       {/* Header Section */}
       <div className="text-center mb-12 relative z-10 max-w-2xl mt-8">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white uppercase mb-4">
+        <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-4">
           Create Pool
         </h1>
       </div>
@@ -58,22 +58,19 @@ export default function CreatePoolPage() {
           <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/30 px-1">Select Pair</label>
           <div className="grid grid-cols-1 gap-3">
             {/* Currency A */}
-            <div className="bg-white/[0.03] border border-white/[0.05] p-4 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full border-[2px] border-black overflow-hidden bg-black relative z-10">
-                  <img
-                    className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
-                    alt={tokenA.symbol}
-                    src={tokenA.icon}
-                  />
-                </div>
+            <div className="bg-white/[0.03] border border-white/[0.05] p-5 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
+              <div className="flex items-center space-x-6">
+                <TokenSelector 
+                  selectedToken={tokenA}
+                  onSelect={setTokenA}
+                  tokens={TOKENS}
+                />
                 <div>
-                  <div className="text-xl font-black text-white tracking-tight">{tokenA.symbol}</div>
-                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenA.address.slice(0, 6)}...${tokenA.address.slice(-4)}`}</div>
+                  <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{tokenA.address ? `${tokenA.address.slice(0, 10)}...${tokenA.address.slice(-8)}` : 'No Address'}</div>
                 </div>
               </div>
               <button 
-                onClick={() => copyToken(tokenA.address, true)}
+                onClick={() => copyToken(tokenA.address || '', true)}
                 className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
                 title="Copy Address"
               >
@@ -82,22 +79,19 @@ export default function CreatePoolPage() {
             </div>
 
             {/* Currency B */}
-            <div className="bg-white/[0.03] border border-white/[0.05] p-4 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full border-[2px] border-black overflow-hidden bg-black relative z-10">
-                  <img
-                    className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
-                    alt={tokenB.symbol}
-                    src={tokenB.icon}
-                  />
-                </div>
+            <div className="bg-white/[0.03] border border-white/[0.05] p-5 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
+              <div className="flex items-center space-x-6">
+                <TokenSelector 
+                  selectedToken={tokenB}
+                  onSelect={setTokenB}
+                  tokens={TOKENS}
+                />
                 <div>
-                  <div className="text-xl font-black text-white tracking-tight">{tokenB.symbol}</div>
-                  <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{`${tokenB.address.slice(0, 6)}...${tokenB.address.slice(-4)}`}</div>
+                  <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{tokenB.address ? `${tokenB.address.slice(0, 10)}...${tokenB.address.slice(-8)}` : 'No Address'}</div>
                 </div>
               </div>
               <button 
-                onClick={() => copyToken(tokenB.address, false)}
+                onClick={() => copyToken(tokenB.address || '', false)}
                 className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
                 title="Copy Address"
               >
@@ -111,13 +105,13 @@ export default function CreatePoolPage() {
         <div className="bg-white/[0.02] border border-white/5 p-4 rounded-lg mb-8 flex flex-col gap-2 relative overflow-hidden">
           <div className="flex items-center gap-4">
             <span className="text-[10px] font-black uppercase text-primary tracking-widest w-16">Token0:</span>
-            <span className="text-[10px] font-mono text-white/60 uppercase tracking-widest">{token0.address}</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/80 ml-auto">{token0.symbol}</span>
+            <span className="text-[10px] font-mono text-white/60 uppercase tracking-widest">{t0.address}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-white/80 ml-auto">{t0.symbol}</span>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-[10px] font-black uppercase text-white/30 tracking-widest w-16">Token1:</span>
-            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{token1.address}</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/60 ml-auto">{token1.symbol}</span>
+            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{t1.address}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-white/60 ml-auto">{t1.symbol}</span>
           </div>
         </div>
 
