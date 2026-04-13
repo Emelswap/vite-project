@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>emelSwap | Add Liquidity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#f7e54f",
+                        "tertiary-fixed": "#e0f368",
+                        "tertiary-fixed-dim": "#d2e45c",
+                        "inverse-primary": "#735d00",
+                        "error-dim": "#d53d18",
+                        "on-surface-variant": "#ababab",
+                        "primary-fixed": "#fdd013",
+                        "primary-container": "#fdd013",
+                        "on-secondary-fixed": "#474000",
+                        "on-error-container": "#ffd2c8",
+                        "primary": "#ffe07f",
+                        "on-surface": "#ffffff",
+                        "error": "#ff7351",
+                        "on-tertiary-container": "#505a00",
+                        "tertiary": "#f1ff95",
+                        "secondary-fixed-dim": "#e8d741",
+                        "secondary-container": "#695f00",
+                        "on-primary": "#635000",
+                        "surface-dim": "#0e0e0e",
+                        "surface-container-low": "#131313",
+                        "on-primary-container": "#594700",
+                        "inverse-on-surface": "#555555",
+                        "surface-variant": "#262626",
+                        "surface-bright": "#2c2c2c",
+                        "on-tertiary-fixed-variant": "#5a6500",
+                        "surface-container": "#191919",
+                        "secondary": "#f7e54f",
+                        "on-primary-fixed": "#423500",
+                        "on-secondary-fixed-variant": "#665c00",
+                        "primary-dim": "#edc200",
+                        "inverse-surface": "#f9f9f9",
+                        "surface-container-highest": "#262626",
+                        "surface-container-high": "#1f1f1f",
+                        "tertiary-container": "#e0f368",
+                        "on-tertiary-fixed": "#3f4700",
+                        "surface-tint": "#ffe07f",
+                        "on-tertiary": "#586300",
+                        "on-error": "#450900",
+                        "background": "#000000",
+                        "on-primary-fixed-variant": "#645000",
+                        "outline": "#757575",
+                        "surface": "#000000",
+                        "error-container": "#b92902",
+                        "primary-fixed-dim": "#edc200",
+                        "on-background": "#ffffff",
+                        "tertiary-dim": "#d2e45c",
+                        "surface-container-lowest": "#000000",
+                        "secondary-dim": "#e8d741",
+                        "outline-variant": "#484848",
+                        "on-secondary": "#5b5300",
+                        "on-secondary-container": "#fff8da"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #ffffff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { backdrop-filter: blur(20px); background: rgba(38, 38, 38, 0.6); }
+        .void-glow { box-shadow: 0 0 40px rgba(255, 210, 23, 0.04); }
+        /* Force remove border-radius for all elements */
+        * { border-radius: 0px !important; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-8 h-20 bg-black z-50 border-b border-white/5">
+<div class="text-2xl font-black tracking-tighter text-white">emelSwap</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-gray-400 font-medium hover:text-white transition-colors" href="#">Swap</a>
+<a class="text-[#FFD217] font-bold border-b-2 border-[#FFD217] pb-1" href="#">Liquidity</a>
+<a class="text-gray-400 font-medium hover:text-white transition-colors" href="#">Bridge</a>
+<a class="text-gray-400 font-medium hover:text-white transition-colors" href="#">Stake</a>
+</nav>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-on-surface-variant hover:bg-[#1f1f1f] transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="bg-surface-container-high px-6 py-2 text-sm font-bold flex items-center gap-2 hover:bg-[#1f1f1f] transition-all active:scale-95 border border-outline-variant">
+<span class="material-symbols-outlined text-sm" data-icon="wallet">wallet</span>
+            Connect Wallet
+        </button>
+</div>
+</header>
+<main class="pt-32 pb-40 max-w-4xl mx-auto px-6">
+<!-- Step 1: Select Pair & Fee Tier -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-8">
+<div class="bg-primary-container text-on-primary-container h-8 w-8 flex items-center justify-center font-bold">1</div>
+<h2 class="text-3xl font-bold tracking-tight">Select Pair &amp; Fee Tier</h2>
+</div>
+<!-- Token Selectors -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="bg-surface-container-low p-6 hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-outline-variant">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="minimalist orange bitcoin logo icon on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa3Sy8aYOzCab94GSwR1VCQHbcLPD5uXgHVdDgQ8p1bHhrNhCCqDTnYo5Y07ex9XJzLasfABN14uU8KWfi4VR2n2pW1W-UrNABaKh4BhVsu54-HiqyRr57w5TJsmUMVGIxs8STfotJitCr_SoH-bAdxpdjvYcEUokuHF2r_B-nuBBcpsS2vCp26fnDiVzCqNY-YRrhUMYtMvtAP_DWMnuqonXYaHKvhDm277uPbOuylPzgntrIqukFZgnL-4HFLv2OY3ZCeUh2-iV5"/>
+</div>
+<div>
+<p class="text-xl font-bold">WBTC</p>
+<p class="text-xs font-mono text-on-surface-variant tracking-widest">0x22...42c</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 hover:bg-surface-container-high transition-all group cursor-pointer border border-transparent hover:border-outline-variant">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="minimalist green tether usdt logo icon on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHkpNHjUeRpeM61EzreUXkpGqxURYJMuSimUzJQQjJRopJFKIGB61ERH53etWQPI1QbxwcBSX46e-X2LVeYjDq1G7ebMKqYhYRcrILjg4SnsWnNniyw9wz9Ltl4o7KhiATsSTQ6yeVm-ACq2KwYD5dE4gr7XOSSP6VF5Qh5epev7hLasw3i_spKeDiiQprbsvj-VaAvmRo0IW01Zs5YYZ-5BX7w6T6JIUGsq3egTrnHynMFJL7KBIpI-UaZv4Hf6ABCBLE29cH0Ue_"/>
+</div>
+<div>
+<p class="text-xl font-bold">USDT</p>
+<p class="text-xs font-mono text-on-surface-variant tracking-widest">0xdA...8f2</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-white transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Fee Tiers -->
+<div class="mb-4">
+<p class="text-xs font-medium tracking-widest text-on-surface-variant uppercase mb-4">Fee Tier</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<p class="text-lg font-bold">0.01%</p>
+<p class="text-[10px] text-on-surface-variant tracking-wider">Tick Spacing: 1</p>
+</div>
+<div class="bg-surface-container-low p-4 border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<p class="text-lg font-bold">0.05%</p>
+<p class="text-[10px] text-on-surface-variant tracking-wider">Tick Spacing: 10</p>
+</div>
+<div class="bg-surface-container-high p-4 border-2 border-primary relative cursor-pointer">
+<span class="absolute -top-2 right-4 bg-primary text-on-primary-container text-[8px] font-black px-2 py-0.5 uppercase">Popular</span>
+<p class="text-lg font-bold">0.30%</p>
+<p class="text-[10px] text-on-surface-variant tracking-wider">Tick Spacing: 60</p>
+</div>
+<div class="bg-surface-container-low p-4 border border-transparent hover:border-outline-variant transition-all cursor-pointer">
+<p class="text-lg font-bold">1.00%</p>
+<p class="text-[10px] text-on-surface-variant tracking-wider">Tick Spacing: 200</p>
+</div>
+</div>
+<p class="mt-4 text-sm text-on-surface-variant leading-relaxed">
+                The amount earned providing liquidity. Choose an amount that suits your risk tolerance and strategy.
+            </p>
+</div>
+</section>
+<!-- Step 2: Set Price Range -->
+<section class="mb-16">
+<div class="flex items-center gap-4 mb-8">
+<div class="bg-primary-container text-on-primary-container h-8 w-8 flex items-center justify-center font-bold">2</div>
+<h2 class="text-3xl font-bold tracking-tight">Set Price Range</h2>
+</div>
+<!-- Toggles -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+<div class="bg-surface-container-low p-6 transition-all border border-transparent hover:border-outline-variant">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Full Range</h3>
+<div class="h-6 w-12 bg-outline-variant p-1 flex items-center">
+<div class="h-4 w-4 bg-white"></div>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                    Providing full range liquidity ensures continuous market participation across all possible prices, offering simplicity but with potential for higher impermanent loss.
+                </p>
+</div>
+<div class="bg-surface-container-high p-6 transition-all border-2 border-primary shadow-[0_0_20px_rgba(255,224,127,0.05)]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Custom Range</h3>
+<div class="h-6 w-12 bg-primary-container p-1 flex items-center justify-end">
+<div class="h-4 w-4 bg-on-primary-container"></div>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                    Custom range allows you to concentrate your liquidity within specific price bounds, enhancing capital efficiency and fee earnings but requiring more active management.
+                </p>
+</div>
+</div>
+<!-- Current Price Info (Moved from within chart section to stay visible) -->
+<div class="bg-surface-container-low p-8 mb-8 border border-outline-variant text-center">
+<p class="text-xs font-medium tracking-widest text-on-surface-variant uppercase mb-2">Current Price</p>
+<h4 class="text-4xl font-black tracking-tight text-white mb-1">70,833.90 <span class="text-xl font-medium text-on-surface-variant">USDT/WBTC</span></h4>
+<p class="text-sm text-on-surface-variant">($70,864.63)</p>
+</div>
+<!-- Price Strategies -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<button class="bg-surface-container-high p-4 text-left hover:scale-[1.02] transition-transform active:scale-95 border border-outline-variant">
+<p class="font-bold mb-1">Stable</p>
+<p class="text-[10px] text-on-surface-variant leading-tight uppercase tracking-wider">
+                    ± 3 ticks.
+                    <br/>Good for stablecoins or low volatility pairs
+                </p>
+</button>
+<button class="bg-surface-container-high p-4 text-left hover:scale-[1.02] transition-transform active:scale-95 border border-outline-variant">
+<p class="font-bold mb-1">Wide</p>
+<p class="text-[10px] text-on-surface-variant leading-tight uppercase tracking-wider">
+                    –50% — +100%.
+                    <br/>Good for volatile pairs
+                </p>
+</button>
+</div>
+<!-- Min/Max Inputs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container p-6 border border-outline-variant">
+<p class="text-[10px] font-medium tracking-widest text-on-surface-variant uppercase mb-4">Min Price</p>
+<div class="flex items-center justify-between mb-4">
+<button class="h-10 w-10 bg-surface-container-highest flex items-center justify-center hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<input class="bg-transparent border-none text-3xl font-bold text-center w-full focus:ring-0" type="text" value="71142.429"/>
+<button class="h-10 w-10 bg-surface-container-highest flex items-center justify-center hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex justify-center">
+<span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1">+0.44%</span>
+</div>
+</div>
+<div class="bg-surface-container p-6 border border-outline-variant">
+<p class="text-[10px] font-medium tracking-widest text-on-surface-variant uppercase mb-4">Max Price</p>
+<div class="flex items-center justify-between mb-4">
+<button class="h-10 w-10 bg-surface-container-highest flex items-center justify-center hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<input class="bg-transparent border-none text-3xl font-bold text-center w-full focus:ring-0" type="text" value="141832.87"/>
+<button class="h-10 w-10 bg-surface-container-highest flex items-center justify-center hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex justify-center">
+<span class="text-xs font-bold text-primary bg-primary/10 px-3 py-1">+100.23%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 3: Deposit Tokens -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<div class="bg-primary-container text-on-primary-container h-8 w-8 flex items-center justify-center font-bold">3</div>
+<h2 class="text-3xl font-bold tracking-tight">Deposit Tokens</h2>
+</div>
+<div class="bg-surface-container-low p-8 void-glow border border-outline-variant">
+<!-- WBTC Input -->
+<div class="bg-surface-container-high p-6 mb-4 group focus-within:ring-2 focus-within:ring-primary transition-all border border-transparent">
+<div class="flex justify-between items-center mb-4">
+<input class="bg-transparent border-none text-4xl font-bold w-full focus:ring-0 p-0" placeholder="0.0" type="text" value="0.5"/>
+<div class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 border border-outline-variant">
+<img class="h-6 w-6" data-alt="small orange bitcoin logo circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtxaYZh0k-AY0RUxniR3IfMw7LYL7WdHYVMoQ-KXTB0nfcmW6frJRUQ6icR6Rz0A_JHHh1t980_DbJETQ5-_QbNYv4Atz-Kq2tOn4PKEgPQfn1kkxvXiLHmAFrJ99JPVeGBNUPZUrYBSomQFihL5hwoZi4gP6L_J2yv9Nvaggszj7GSxqNBMKrrNe1Elu7GLoBVD__IvrzOhaeeiHtuRAQJMkJZknqC1tdQy64zq-EFEJAuVHUbmbbwQTe7jaIkhBD09KQbRHP5BGw"/>
+<span class="font-bold">WBTC</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-on-surface-variant">$35,416.95</p>
+<p class="text-xs text-on-surface-variant">Balance: 1.24 WBTC <span class="text-primary font-bold cursor-pointer ml-2 hover:underline">MAX</span></p>
+</div>
+</div>
+<!-- USDT Input -->
+<div class="bg-surface-container-high p-6 mb-8 group focus-within:ring-2 focus-within:ring-primary transition-all border border-transparent">
+<div class="flex justify-between items-center mb-4">
+<input class="bg-transparent border-none text-4xl font-bold w-full focus:ring-0 p-0" placeholder="0.0" type="text" value="35416.95"/>
+<div class="flex items-center gap-2 bg-surface-container-highest px-4 py-2 border border-outline-variant">
+<img class="h-6 w-6" data-alt="small green tether logo circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMOhLCqCczOmMq-OgvYZDRRFpGPWp-Qkugz9IL7NpN-rouBKUtTMBeNLQKa9CfjZ9MEvruwsmrAiAcrEqXA8PQyCIT4M47PtF2KXWzvlDUXsKK9TEO4j7sglYuuGqjJfWTzstEGvfJs2TafOcoQuj4EqfQxadoUCJeAtEg8QFDIBeO-9sp6KawPc4UtXTlpwPj9xeBDcXJCKY4j0rGRcNd9ui9_Qw1ghGI7rhwdRFTW1xS2884SVzNA2sSq3yK2VmRSOuFisrj08xK"/>
+<span class="font-bold">USDT</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-xs text-on-surface-variant">$35,416.95</p>
+<p class="text-xs text-on-surface-variant">Balance: 50,000.00 USDT <span class="text-primary font-bold cursor-pointer ml-2 hover:underline">MAX</span></p>
+</div>
+</div>
+<div class="text-center mb-8">
+<p class="text-sm text-on-surface-variant">Specify the token amounts for your liquidity contribution and click mint position.</p>
+</div>
+<button class="w-full py-6 bg-primary-container text-on-primary-container text-xl font-black uppercase tracking-widest hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_10px_40px_rgba(253,208,19,0.2)]">
+                Mint Position
+            </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<div class="fixed bottom-8 left-0 right-0 z-50 flex justify-center items-center md:hidden">
+<nav class="bg-[#131313]/80 backdrop-blur-xl px-6 py-3 flex gap-2 void-glow border border-white/5">
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="show_chart">show_chart</span>
+<span class="text-[10px] uppercase tracking-[0.1em] mt-1">Market</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+<span class="text-[10px] uppercase tracking-[0.1em] mt-1">Trade</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#FFD217] text-[#0e0e0e] px-5 py-2 scale-105" href="#">
+<span class="material-symbols-outlined" data-icon="payments" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-[10px] uppercase tracking-[0.1em] mt-1 font-bold">Earn</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="text-[10px] uppercase tracking-[0.1em] mt-1">Wallet</span>
+</a>
+</nav>
+</div>
+</body></html>

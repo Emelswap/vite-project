@@ -17,7 +17,7 @@ export default function PoolDetailsPage() {
     return (address === "0" || address === "0x0000000000000000000000000000000000000000") ? "NATIVE" : address;
   };
 
-  const addLiquidityPath = `/positions/currency0=${getCurrencyParam(token0Address)}&currency1=${getCurrencyParam(token1Address)}`;
+  const addLiquidityPath = `/positions/create/currency0=${getCurrencyParam(token0Address)}&currency1=${getCurrencyParam(token1Address)}`;
 
   return (
     <div className="pt-8 pb-40 px-6 max-w-7xl mx-auto relative z-10 flex flex-col items-center">
