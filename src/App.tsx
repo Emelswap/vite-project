@@ -9,7 +9,8 @@ import ActivityPage from "@/app/activity/page";
 import AddTokenPage from "@/app/add-token/page";
 import CreatePoolPage from "@/app/pools/create/page";
 import PoolDetailsPage from "@/app/pools/id/page";
-import PositionsPage from "@/app/positions/create/page";
+import CreatePositionsPage from "@/app/positions/create/page";
+import PositionDetailsPage from "@/app/positions/id/page";
 
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +37,8 @@ export default function App() {
           <Route path="/pools" element={<PoolsPage />} />
           <Route path="/pools/create" element={<CreatePoolPage />} />
           <Route path="/pools/:id" element={<PoolDetailsPage />} />
-          <Route path="/positions/create/:params" element={<PositionsPage />} />
+          <Route path="/positions/create/:params" element={<CreatePositionsPage />} />
+          <Route path="/positions/:id" element={<PositionDetailsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/activity" element={<ActivityPage />} />
           <Route path="/add-token" element={<AddTokenPage />} />

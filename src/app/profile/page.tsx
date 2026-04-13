@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExternalLink } from 'lucide-react';
 
 const transactions = [
@@ -41,7 +42,37 @@ const transactions = [
 ];
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState<'tokens' | 'activity'>('tokens');
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'tokens' | 'activity' | 'positions'>('tokens');
+
+  const positions = [
+    {
+      id: 1,
+      pair: 'ETH / USDC',
+      fee: '0.05%',
+      range: '2,450.00 — 3,850.00',
+      liquidity: '$42,850.42',
+      status: 'In Range',
+      statusColor: 'text-emerald-400',
+      imgs: [
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBloYkWcAZ6nPHwnmfr57eTpo9sQHjaPnq1pOAEahqybC22VT7cuyiepuqlQxTcbSBZWhCoIeGUkF4SDg4ujaMebFNeZozVwNLw3YEYuyeQi18wPDMjSvuKmYeePF6IFZLtG4qtswQf3z0TvGOOdNC6RVS_AXRLVTlaptmOzoPoC8tQNeXJkNFcCNS8wO9mxPgY9RgGPFN5FfRIF8vZgxnP8mn0sCLN_IFvdxkbCD7L-V_UVNWhc0agxbWvwV63hi5VKn0dqAerM1fd'
+      ]
+    },
+    {
+      id: 2,
+      pair: 'WBTC / ETH',
+      fee: '0.3%',
+      range: '0.045 — 0.082',
+      liquidity: '$12,400.12',
+      status: 'In Range',
+      statusColor: 'text-emerald-400',
+      imgs: [
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuA9fS3D-HZ_-lGQ2BXSLW-iFGfMzXneWXpusuEWp-7z3SHyHuEbnch2ViRXS52mWEl4ZMkgM1pJGdwy1SMUbN-l3oDHFl8zDeb1OCfqI0u40yUnBvRHf--2uli5lSgEHgnEZamTswfIDt63FeIXnlTad5IQf9y1YZKyyfc2ONeHAhYs1akExVKqWyg6oQW8WSfmPNVDWtZk8EwV1hN3XFnV0NgFvOFKz-BdMuiYLhtQquqDuiNl_KoodMz1BFPwvqug0iaZvnuBcxIS',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It'
+      ]
+    }
+  ];
   const assets = [
     { name: 'Ethereum', symbol: 'ETH', balance: '32.4', value: '$84,200.00', change: '+4.2%', allocation: '58.9%', color: 'bg-[#627eea]/20', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuClYLTjMo-ECiwi1rxIYCry-M0GiEH4kWXDlAh3entO2pdN5tPzkWY_rajik19c48DLkT9cEzl40ERJ6fZ795zPp-nbGSuhplgI_gG2zeEM6zhGn6If4syR89Ar5sFHRQdCCuOPiNTgH8JzmxtzhbgcEgkIqzVBi1jJVBmxj4TCZvd_SEWAw8-wX2D04wS5s3UfTJC38p8wVqSmuaeug1kz6BFqmj9WEQjsx7pjtHm2NMxo5ZdufoPCwF1cgc5VVN7uMIbcWzFIv9It' },
     { name: 'Wrapped Bitcoin', symbol: 'WBTC', balance: '0.68', value: '$45,300.00', change: '+1.8%', allocation: '31.7%', color: 'bg-[#f7931a]/20', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA9fS3D-HZ_-lGQ2BXSLW-iFGfMzXneWXpusuEWp-7z3SHyHuEbnch2ViRXS52mWEl4ZMkgM1pJGdwy1SMUbN-l3oDHFl8zDeb1OCfqI0u40yUnBvRHf--2uli5lSgEHgnEZamTswfIDt63FeIXnlTad5IQf9y1YZKyyfc2ONeHAhYs1akExVKqWyg6oQW8WSfmPNVDWtZk8EwV1hN3XFnV0NgFvOFKz-BdMuiYLhtQquqDuiNl_KoodMz1BFPwvqug0iaZvnuBcxIS' },
@@ -67,7 +98,7 @@ export default function ProfilePage() {
       <div className="flex gap-2 p-1 bg-white/[0.03] rounded-full mb-12 shadow-inner border border-white/5 backdrop-blur-md">
         <button 
           onClick={() => setActiveTab('tokens')}
-          className={`px-10 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
+          className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
             activeTab === 'tokens' 
               ? 'bg-white/10 text-white shadow-lg ring-1 ring-white/10' 
               : 'text-white/40 hover:text-white'
@@ -76,8 +107,18 @@ export default function ProfilePage() {
           Tokens
         </button>
         <button 
+          onClick={() => setActiveTab('positions')}
+          className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
+            activeTab === 'positions' 
+              ? 'bg-white/10 text-white shadow-lg ring-1 ring-white/10' 
+              : 'text-white/40 hover:text-white'
+          }`}
+        >
+          Positions
+        </button>
+        <button 
           onClick={() => setActiveTab('activity')}
-          className={`px-10 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
+          className={`px-8 py-3 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
             activeTab === 'activity' 
               ? 'bg-white/10 text-white shadow-lg ring-1 ring-white/10' 
               : 'text-white/40 hover:text-white'
@@ -128,6 +169,45 @@ export default function ProfilePage() {
                       className="h-full bg-primary rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(255,210,23,0.3)]" 
                       style={{ width: asset.allocation }}
                     ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : activeTab === 'positions' ? (
+          <div className="space-y-6">
+            {positions.map((pos) => (
+              <div 
+                key={pos.id} 
+                onClick={() => navigate(`/positions/${pos.id}`)}
+                className="group bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.03] p-8 rounded-2xl transition-all duration-300 cursor-pointer relative overflow-hidden"
+              >
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                  <div className="flex items-center gap-6">
+                    <div className="flex -space-x-4">
+                      {pos.imgs.map((img, i) => (
+                        <div key={i} className="w-12 h-12 rounded-full border-[3px] border-black bg-black overflow-hidden relative z-[5-i]">
+                          <img alt="token" className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500" src={img}/>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-xl font-black text-white tracking-tight">{pos.pair}</h3>
+                        <span className="text-[9px] font-black bg-white/10 text-white/60 px-2 py-0.5 rounded uppercase tracking-widest">{pos.fee}</span>
+                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded bg-white/5 ${pos.statusColor}`}>
+                          {pos.status}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-mono text-white/30 uppercase tracking-[0.1em] mt-2">
+                        Range: <span className="text-white/60">{pos.range}</span>
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="text-left md:text-right w-full md:w-auto">
+                    <p className="text-[10px] font-black text-white/20 uppercase tracking-widest mb-1">Liquidity Value</p>
+                    <p className="text-2xl font-black text-white tracking-tight">{pos.liquidity}</p>
                   </div>
                 </div>
               </div>
