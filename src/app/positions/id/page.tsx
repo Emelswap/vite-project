@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, RefreshCw, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, ExternalLink, RefreshCw, Plus, Minus, ChevronDown, Flame, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 
 export default function PositionDetailsPage() {
   const { id } = useParams<{ id: string }>();
+  const [manageOpen, setManageOpen] = useState(false);
+  const [isCollectingFees, setIsCollectingFees] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<'increase' | 'decrease' | 'burn' | null>(null);
 
   // Mock position data based on the ID
   const position = {
@@ -52,15 +56,74 @@ export default function PositionDetailsPage() {
             </div>
           </div>
         </div>
-        <div className="flex gap-3">
-          <button className="bg-white/5 border border-white/10 px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all active:scale-95">
+        <div className="flex gap-3 relative">
+          <button 
+            onClick={() => {
+              setIsCollectingFees(!isCollectingFees);
+              setManageOpen(false);
+            }}
+            className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 border ${
+              isCollectingFees 
+                ? 'bg-primary/20 text-white border-primary ring-1 ring-primary/20' 
+                : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+            }`}
+          >
             Collect Fees
           </button>
-          <button className="bg-primary text-black px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest gold-glow transition-all active:scale-95">
+          
+          <button 
+            onClick={() => {
+              setManageOpen(!manageOpen);
+              setIsCollectingFees(false);
+            }}
+            className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 flex items-center gap-2 ${manageOpen ? 'bg-white/20 text-white border border-white/30' : 'bg-primary text-black gold-glow'}`}
+          >
             Manage
+            <ChevronDown size={14} className={`transition-transform duration-300 ${manageOpen ? 'rotate-180' : ''}`} />
           </button>
         </div>
       </div>
+
+      {/* Expanded Manage Actions */}
+      {manageOpen && (
+        <div className="flex flex-wrap gap-4 mb-12 p-1 bg-white/[0.03] border border-white/5 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-300">
+          <button 
+            onClick={() => setSelectedAction(selectedAction === 'increase' ? null : 'increase')}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
+              selectedAction === 'increase' 
+                ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
+                : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
+            }`}
+          >
+            <ArrowUpCircle size={16} className={`transition-colors ${selectedAction === 'increase' ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
+            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'increase' ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>Increase Position</span>
+          </button>
+          
+          <button 
+            onClick={() => setSelectedAction(selectedAction === 'decrease' ? null : 'decrease')}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
+              selectedAction === 'decrease' 
+                ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
+                : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
+            }`}
+          >
+            <ArrowDownCircle size={16} className={`transition-colors ${selectedAction === 'decrease' ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
+            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'decrease' ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>Decrease Position</span>
+          </button>
+          
+          <button 
+            onClick={() => setSelectedAction(selectedAction === 'burn' ? null : 'burn')}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
+              selectedAction === 'burn' 
+                ? 'bg-red-500/20 border-red-500 ring-1 ring-red-500/20' 
+                : 'bg-red-500/[0.03] border-red-500/10 hover:bg-red-500/10 hover:border-red-500/30'
+            }`}
+          >
+            <Flame size={16} className={`transition-colors ${selectedAction === 'burn' ? 'text-red-400' : 'text-red-400/40 group-hover:text-red-400'}`} />
+            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'burn' ? 'text-white' : 'text-red-400/60 group-hover:text-white'}`}>Burn Position</span>
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {/* Liquidity Card */}
