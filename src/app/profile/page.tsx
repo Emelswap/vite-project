@@ -175,7 +175,27 @@ export default function ProfilePage() {
             ))}
           </div>
         ) : activeTab === 'positions' ? (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            {/* Position Metrics */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white/[0.02] border border-white/5 p-6 rounded-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-[100px] h-[100px] bg-primary/5 blur-[50px] rounded-full pointer-events-none group-hover:bg-primary/10 transition-colors"></div>
+                <p className="text-[9px] uppercase tracking-widest text-white/30 font-black mb-2 relative z-10">Total Liquidity</p>
+                <p className="text-2xl font-black text-white relative z-10 tracking-tight">$55,250.54</p>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 p-6 rounded-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-[100px] h-[100px] bg-emerald-500/5 blur-[50px] rounded-full pointer-events-none group-hover:bg-emerald-500/10 transition-colors"></div>
+                <p className="text-[9px] uppercase tracking-widest text-white/30 font-black mb-2 relative z-10">Unclaimed Fees</p>
+                <p className="text-2xl font-black text-emerald-400 relative z-10 tracking-tight">$1,142.20</p>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 p-6 rounded-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-[100px] h-[100px] bg-white/5 blur-[50px] rounded-full pointer-events-none group-hover:bg-white/10 transition-colors"></div>
+                <p className="text-[9px] uppercase tracking-widest text-white/30 font-black mb-2 relative z-10">Active Positions</p>
+                <p className="text-2xl font-black text-white relative z-10 tracking-tight">{positions.length}</p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
             {positions.map((pos) => (
               <div 
                 key={pos.id} 
@@ -213,7 +233,8 @@ export default function ProfilePage() {
               </div>
             ))}
           </div>
-        ) : (
+        </div>
+      ) : (
           <div className="w-full bg-white/[0.01] rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
             <div className="hidden md:grid grid-cols-[1fr_1.5fr_1fr_1.2fr_1.2fr_1fr] gap-4 px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 border-b border-white/5 bg-white/[0.02]">
               <div>Time</div>
