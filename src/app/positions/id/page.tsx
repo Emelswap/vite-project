@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, RefreshCw, Plus, Minus, ChevronDown, Flame, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
+import { ArrowLeft, ExternalLink, RefreshCw, ChevronDown, Flame, ArrowUpCircle, ArrowDownCircle, X, AlertTriangle, Wallet } from 'lucide-react';
 
 export default function PositionDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const [manageOpen, setManageOpen] = useState(false);
   const [isCollectingFees, setIsCollectingFees] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState<'increase' | 'decrease' | 'burn' | null>(null);
+  const [activeModal, setActiveModal] = useState<'increase' | 'decrease' | 'burn' | 'collect' | null>(null);
 
   // Mock position data based on the ID
   const position = {
@@ -27,7 +29,7 @@ export default function PositionDetailsPage() {
   };
 
   return (
-    <div className="pt-8 pb-40 px-6 max-w-4xl mx-auto relative z-10">
+    <div className="pt-8 pb-40 px-6 max-w-4xl mx-auto relative">
       <Link to="/profile" className="flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-8 group w-fit">
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
         <span className="text-[10px] font-black uppercase tracking-widest">Back to Profile</span>
@@ -59,7 +61,8 @@ export default function PositionDetailsPage() {
         <div className="flex gap-3 relative">
           <button 
             onClick={() => {
-              setIsCollectingFees(!isCollectingFees);
+              setActiveModal('collect');
+              setIsCollectingFees(true);
               setManageOpen(false);
             }}
             className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 border ${
@@ -88,7 +91,10 @@ export default function PositionDetailsPage() {
       {manageOpen && (
         <div className="flex flex-wrap gap-4 mb-12 p-1 bg-white/[0.03] border border-white/5 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-300">
           <button 
-            onClick={() => setSelectedAction(selectedAction === 'increase' ? null : 'increase')}
+            onClick={() => {
+              setSelectedAction('increase');
+              setActiveModal('increase');
+            }}
             className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
               selectedAction === 'increase' 
                 ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
@@ -100,7 +106,10 @@ export default function PositionDetailsPage() {
           </button>
           
           <button 
-            onClick={() => setSelectedAction(selectedAction === 'decrease' ? null : 'decrease')}
+            onClick={() => {
+              setSelectedAction('decrease');
+              setActiveModal('decrease');
+            }}
             className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
               selectedAction === 'decrease' 
                 ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
@@ -112,7 +121,10 @@ export default function PositionDetailsPage() {
           </button>
           
           <button 
-            onClick={() => setSelectedAction(selectedAction === 'burn' ? null : 'burn')}
+            onClick={() => {
+              setSelectedAction('burn');
+              setActiveModal('burn');
+            }}
             className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
               selectedAction === 'burn' 
                 ? 'bg-red-500/20 border-red-500 ring-1 ring-red-500/20' 
@@ -175,9 +187,6 @@ export default function PositionDetailsPage() {
               <span className="text-sm font-black">USDC</span>
               <span className="text-sm font-black text-white">12.50 USDC</span>
             </div>
-            <button className="w-full mt-4 py-4 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all active:scale-95">
-              View History
-            </button>
           </div>
         </div>
       </div>
@@ -217,6 +226,208 @@ export default function PositionDetailsPage() {
           <span>&infin;</span>
         </div>
       </div>
+
+      {/* Transaction History Section */}
+      <div className="mt-12">
+        <button 
+          onClick={() => setHistoryOpen(!historyOpen)}
+          className="flex items-center gap-3 group outline-none"
+        >
+          <div className={`p-2 rounded-lg transition-colors ${historyOpen ? 'bg-primary/20 text-primary' : 'bg-white/5 text-white/40 group-hover:bg-white/10 group-hover:text-white'}`}>
+            <ChevronDown size={16} className={`transition-transform duration-300 ${historyOpen ? 'rotate-180' : ''}`} />
+          </div>
+          <span className={`text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${historyOpen ? 'text-white' : 'text-white/40 group-hover:text-white'}`}>
+            View Position History
+          </span>
+        </button>
+
+        {historyOpen && (
+          <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-500">
+            <div className="glass-morphism bg-white/[0.01] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="hidden md:grid grid-cols-[1fr_2fr_1fr_1fr] gap-4 px-8 py-6 text-[9px] font-black uppercase tracking-[0.2em] text-white/20 border-b border-white/5 bg-white/[0.02]">
+                <div>Time</div>
+                <div>Action</div>
+                <div>Value</div>
+                <div className="text-right">Hash</div>
+              </div>
+              <div className="divide-y divide-white/5">
+                {[
+                  { time: '2 days ago', action: 'Increase Liquidity', value: '$12,450.00', hash: '0x07616c15236920bf2562922417926de7d73d376ef249df7cc35176ccae51bd6b' },
+                  { time: '5 days ago', action: 'Mint Position', value: '$30,400.42', hash: '0xd7ad58961727936a2818a7d25e4125f46487926de7d73d376ef249df7ccaa12fb' },
+                  { time: '1 week ago', action: 'Collect Fees', value: '$842.10', hash: '0x17c928821727936a2818a7d25e4125f46487926de7d73d376ef249df7ccae51bd6b' }
+                ].map((tx, i) => (
+                  <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr_1fr] gap-4 px-8 py-6 items-center hover:bg-white/[0.03] transition-all group cursor-pointer">
+                    <div className="text-[10px] font-bold text-white/40">{tx.time}</div>
+                    <div className="text-[11px] font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{tx.action}</div>
+                    <div className="text-[11px] font-black text-white">{tx.value}</div>
+                    <div className="text-right">
+                      <a 
+                        href={`https://testnet.arcscan.app/tx/${tx.hash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-mono text-white/30 hover:text-primary transition-colors tracking-widest flex items-center justify-end gap-1.5 group/hash"
+                      >
+                        {tx.hash.slice(0, 6)}...{tx.hash.slice(-4)}
+                        <ExternalLink size={10} className="text-primary/60 shrink-0" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Collect Fees Modal */}
+      {activeModal === 'collect' && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            onClick={() => setActiveModal(null)}
+          ></div>
+          
+          <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
+            <button 
+              onClick={() => setActiveModal(null)}
+              className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex flex-col items-center text-center mt-8">
+              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-2">Collect Fees</h2>
+              <p className="text-[9px] text-white/40 font-medium max-w-[280px] uppercase tracking-[0.2em] mb-4">
+                Claim your earned trading fees from this position.
+              </p>
+            </div>
+
+            <div className="w-full flex-1 flex flex-col justify-center space-y-4">
+              <div className="bg-white/[0.02] border border-white/5 p-6">
+                <p className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-6 text-center">Unclaimed Earnings</p>
+                
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center px-4">
+                    <div className="flex items-center gap-4">
+                       <img src={position.imgs[0]} className="w-6 h-6 border border-white/10" />
+                       <div>
+                         <p className="text-xs font-black text-white uppercase">0.042 ETH</p>
+                         <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Ethereum</p>
+                       </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-white/40">$130.00</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center px-4">
+                    <div className="flex items-center gap-4">
+                       <img src={position.imgs[1]} className="w-6 h-6 border border-white/10" />
+                       <div>
+                         <p className="text-xs font-black text-white uppercase">12.50 USDC</p>
+                         <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">USD Coin</p>
+                       </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-white/40">$12.50</span>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center">
+                  <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white/20 mb-1">Total Receivable</span>
+                  <span className="text-3xl font-black text-primary tracking-tighter">$142.50</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 w-full mt-6">
+              <button 
+                onClick={() => setActiveModal(null)}
+                className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all"
+              >
+                Cancel
+              </button>
+              <button className="py-5 bg-primary text-black font-black uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(255,210,23,0.2)] hover:brightness-110 active:scale-95 transition-all text-[9px]">
+                Collect All Fees
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Burn Modal */}
+      {activeModal === 'burn' && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            onClick={() => setActiveModal(null)}
+          ></div>
+          
+          <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-red-500/30 p-10 shadow-[0_0_50px_rgba(239,68,68,0.15)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
+            <button 
+              onClick={() => setActiveModal(null)}
+              className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex flex-col items-center text-center mt-8">
+              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-2">Burn Position</h2>
+              <p className="text-[9px] text-white/40 font-medium max-w-[280px] uppercase tracking-[0.2em]">
+                This action is final and irreversible.
+              </p>
+            </div>
+
+            <div className="w-full flex-1 flex flex-col justify-center space-y-4">
+              <div className="bg-white/[0.02] border border-white/5 p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-[100px] h-[100px] bg-red-500/5 blur-[50px] pointer-events-none"></div>
+                <div className="flex justify-between items-center mb-4 relative z-10">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Tokens to Claim</span>
+                  <Wallet size={10} className="text-white/20" />
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                       <img src={position.imgs[0]} className="w-4 h-4" />
+                       <span className="text-[11px] font-black text-white">12.442 ETH</span>
+                    </div>
+                    <span className="text-[9px] font-mono text-white/30">$25,262.50</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                       <img src={position.imgs[1]} className="w-4 h-4" />
+                       <span className="text-[11px] font-black text-white">17,742.92 USDC</span>
+                    </div>
+                    <span className="text-[9px] font-mono text-white/30">$17,742.92</span>
+                  </div>
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-end">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Total Value</span>
+                  <span className="text-xl font-black text-white tracking-tight">$43,005.42</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/10">
+                <AlertTriangle size={16} className="text-red-500 shrink-0 mt-0.5" />
+                <p className="text-[10px] text-red-400/80 leading-relaxed font-black uppercase tracking-widest">
+                  withdraw liquidity and terminate fee generation permanently.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 w-full mt-6">
+              <button 
+                onClick={() => setActiveModal(null)}
+                className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all"
+              >
+                Cancel
+              </button>
+              <button className="py-4 bg-red-500 text-white text-[9px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:brightness-110 transition-all">
+                Confirm Burn
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
