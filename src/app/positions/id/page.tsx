@@ -9,6 +9,9 @@ export default function PositionDetailsPage() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState<'increase' | 'decrease' | 'burn' | null>(null);
   const [activeModal, setActiveModal] = useState<'increase' | 'decrease' | 'burn' | 'collect' | null>(null);
+  const [decreasePercent, setDecreasePercent] = useState(50);
+  const [increasePercent0, setIncreasePercent0] = useState<number | null>(null);
+  const [increasePercent1, setIncreasePercent1] = useState<number | null>(null);
 
   // Mock position data based on the ID
   const position = {
@@ -196,10 +199,10 @@ export default function PositionDetailsPage() {
         <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-8 text-center">Price Range</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          <div className="text-center p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
+          <div className="text-center p-6 bg-white/[0.02] border border-white/5">
             <p className="text-[9px] uppercase tracking-widest text-white/20 font-black mb-2">Min Price</p>
-            <p className="text-2xl font-black text-white">{position.range.min}</p>
-            <p className="text-[9px] text-white/40 uppercase mt-1">USDC per ETH</p>
+            <p className="text-3xl font-black text-white leading-none">{position.range.min}</p>
+            <p className="text-[9px] text-white/40 uppercase mt-2">USDC per ETH</p>
           </div>
           
           <div className="text-center p-8 bg-primary/5 border border-primary/20 rounded-2xl relative shadow-[0_0_30px_rgba(255,210,23,0.05)]">
@@ -209,10 +212,10 @@ export default function PositionDetailsPage() {
             <p className="text-[9px] text-primary/40 uppercase mt-1">USDC per ETH</p>
           </div>
 
-          <div className="text-center p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
+          <div className="text-center p-6 bg-white/[0.02] border border-white/5">
             <p className="text-[9px] uppercase tracking-widest text-white/20 font-black mb-2">Max Price</p>
-            <p className="text-2xl font-black text-white">{position.range.max}</p>
-            <p className="text-[9px] text-white/40 uppercase mt-1">USDC per ETH</p>
+            <p className="text-3xl font-black text-white leading-none">{position.range.max}</p>
+            <p className="text-[9px] text-white/40 uppercase mt-2">USDC per ETH</p>
           </div>
         </div>
 
@@ -221,7 +224,7 @@ export default function PositionDetailsPage() {
           <div className="absolute h-full glass-morphism bg-primary/20 border-x border-primary" style={{ left: '20%', right: '25%' }}></div>
           <div className="absolute top-0 h-full w-1 bg-primary gold-glow" style={{ left: '42%' }}></div>
         </div>
-        <div className="flex justify-between mt-4 text-[9px] font-black uppercase tracking-widest text-white/20">
+        <div className="flex justify-between mt-4 text-[15px] font-black uppercase tracking-[0.3em] text-white/50">
           <span>0</span>
           <span>&infin;</span>
         </div>
@@ -351,6 +354,219 @@ export default function PositionDetailsPage() {
           </div>
         </div>
       )}
+
+      {/* Increase Position Modal */}
+      {activeModal === 'increase' && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            onClick={() => setActiveModal(null)}
+          ></div>
+          
+          <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
+            <button 
+              onClick={() => setActiveModal(null)}
+              className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex flex-col items-center text-center mt-6">
+              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-1">Increase Position</h2>
+              <p className="text-[9px] text-white/40 font-medium max-w-[280px] uppercase tracking-[0.2em] mb-2">
+                Add more liquidity to your existing range.
+              </p>
+            </div>
+
+            <div className="w-full flex-1 flex flex-col justify-center space-y-3">
+              {/* Token Input 0 */}
+              <div className="bg-white/[0.02] border border-white/5 p-5">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Deposit Amount</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: 45.2 ETH</span>
+                    <div className="flex gap-2">
+                       {[25, 50, 75, 100].map(p => (
+                        <button 
+                          key={p} 
+                          onClick={() => setIncreasePercent0(p)}
+                          className={`text-[9px] font-black uppercase transition-colors ${
+                            increasePercent0 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
+                          }`}
+                        >
+                          {p === 100 ? 'MAX' : `${p}%`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <input 
+                    type="number" 
+                    placeholder="0.0" 
+                    className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
+                  />
+                  <div className="flex items-center gap-2 bg-white/5 px-3 py-1 border border-white/10 uppercase">
+                    <img src={position.imgs[0]} className="w-4 h-4" />
+                    <span className="text-[10px] font-black text-white">ETH</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Token Input 1 */}
+              <div className="bg-white/[0.02] border border-white/5 p-5">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Deposit Amount</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: 12,400 USDC</span>
+                    <div className="flex gap-2">
+                      {[25, 50, 75, 100].map(p => (
+                        <button 
+                          key={p} 
+                          onClick={() => setIncreasePercent1(p)}
+                          className={`text-[9px] font-black uppercase transition-colors ${
+                            increasePercent1 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
+                          }`}
+                        >
+                          {p === 100 ? 'MAX' : `${p}%`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center">
+                  <input 
+                    type="number" 
+                    placeholder="0.0" 
+                    className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
+                  />
+                  <div className="flex items-center gap-2 bg-white/5 px-3 py-1 border border-white/10 uppercase">
+                    <img src={position.imgs[1]} className="w-4 h-4" />
+                    <span className="text-[10px] font-black text-white">USDC</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 px-2">
+                <div className="flex justify-between items-center mb-1.5">
+                  <span className="text-[8px] font-black uppercase tracking-widest text-white/20">Selected Range</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-emerald-400">In Range</span>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/[0.01] border border-white/5 p-2.5 text-center">
+                    <p className="text-[8px] font-black uppercase tracking-widest text-white/20">Min Price</p>
+                    <p className="text-base font-black text-white">{position.range.min}</p>
+                  </div>
+                  <div className="bg-white/[0.01] border border-white/5 p-2.5 text-center">
+                    <p className="text-[8px] font-black uppercase tracking-widest text-white/20">Max Price</p>
+                    <p className="text-base font-black text-white">{position.range.max}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 w-full mt-6">
+              <button 
+                onClick={() => setActiveModal(null)}
+                className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all font-black"
+              >
+                Cancel
+              </button>
+              <button className="py-4 bg-primary text-black text-[9px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(255,210,23,0.3)] hover:brightness-110 transition-all font-black">
+                Add Liquidity
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Decrease Position Modal */}
+      {activeModal === 'decrease' && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            onClick={() => setActiveModal(null)}
+          ></div>
+          
+          <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
+            <button 
+              onClick={() => setActiveModal(null)}
+              className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex flex-col items-center text-center mt-6">
+              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-1">Remove Liquidity</h2>
+              <p className="text-[9px] text-white/40 font-medium max-w-[280px] uppercase tracking-[0.2em] mb-2">
+                Withdraw a portion of your assets.
+              </p>
+            </div>
+
+            <div className="w-full flex-1 flex flex-col justify-center space-y-6">
+              <div className="text-center">
+                <span className="text-4xl font-black text-white tracking-tighter">{decreasePercent}%</span>
+                <div className="flex justify-center gap-2 mt-6">
+                  {[25, 50, 75, 100].map((p) => (
+                    <button 
+                      key={p}
+                      onClick={() => setDecreasePercent(p)}
+                      className={`px-3 py-1.5 border text-[8px] font-black uppercase tracking-widest transition-all ${
+                        decreasePercent === p 
+                        ? 'bg-primary text-black border-primary' 
+                        : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10'
+                      }`}
+                    >
+                      {p === 100 ? 'MAX' : `${p}%`}
+                    </button>
+                  ))}
+                </div>
+                <div className="px-10 mt-6 md:mt-10">
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="100" 
+                    value={decreasePercent}
+                    onChange={(e) => setDecreasePercent(parseInt(e.target.value))}
+                    className="w-full h-1 bg-white/10 appearance-none outline-none accent-primary cursor-pointer"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-white/[0.02] border border-white/5 p-5 space-y-3">
+                <p className="text-[8px] font-black uppercase tracking-widest text-white/30 mb-1">Assets to Receive</p>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <img src={position.imgs[0]} className="w-4 h-4" />
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">ETH</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-white/60">6.22 ETH</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <img src={position.imgs[1]} className="w-4 h-4" />
+                    <span className="text-[10px] font-black text-white uppercase tracking-widest">USDC</span>
+                  </div>
+                  <span className="text-[10px] font-mono text-white/60">8,871.21 USDC</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 w-full mt-6">
+              <button 
+                onClick={() => setActiveModal(null)}
+                className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all font-black"
+              >
+                Cancel
+              </button>
+              <button className="py-4 bg-primary text-black text-[9px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(255,210,23,0.3)] hover:brightness-110 transition-all font-black">
+                Remove Liquidity
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
       {/* Burn Modal */}
       {activeModal === 'burn' && (
