@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Copy, Check, Info, ChevronDown } from 'lucide-react';
 import TokenSelector, { Token } from '@/components/TokenSelector';
 
 const TOKENS: Token[] = [
@@ -10,12 +12,12 @@ const TOKENS: Token[] = [
 ];
 
 export default function CreatePoolPage() {
-  const [feeTier, setFeeTier] = useState('0.30%');
+  const [feeTier, setFeeTier] = useState('0.3%');
   const [startingRatio, setStartingRatio] = useState('1:1');
   const [copiedA, setCopiedA] = useState(false);
   const [copiedB, setCopiedB] = useState(false);
   const [tokenA, setTokenA] = useState<Token>(TOKENS[0]);
-  const [tokenB, setTokenB] = useState<Token>(TOKENS[4]);
+  const [tokenB, setTokenB] = useState<Token>(TOKENS[1]);
 
   const copyToken = (address: string, isA: boolean) => {
     if (!address) return;
@@ -30,10 +32,10 @@ export default function CreatePoolPage() {
   };
 
   const feeTiers = [
-    { label: '0.01%', sub: 'STABLE', spacing: '1', popular: false },
-    { label: '0.05%', sub: 'POPULAR', spacing: '10', popular: true },
-    { label: '0.30%', sub: 'STANDARD', spacing: '60', popular: false },
-    { label: '1.00%', sub: 'EXOTIC', spacing: '200', popular: false },
+    { label: '0.01%', sub: 'STABLE', spacing: '1' },
+    { label: '0.05%', sub: 'BEST', spacing: '10' },
+    { label: '0.3%', sub: 'DEFI', spacing: '60' },
+    { label: '1.00%', sub: 'EXOTIC', spacing: '200' },
   ];
 
   const isTokenA0 = (tokenA.address || '').toLowerCase() < (tokenB.address || '').toLowerCase();
@@ -41,153 +43,183 @@ export default function CreatePoolPage() {
   const t1 = isTokenA0 ? tokenB : tokenA;
 
   return (
-    <main className="pt-8 pb-40 px-6 max-w-6xl mx-auto relative z-10 flex flex-col items-center">
+    <div className="pt-8 pb-40 px-6 max-w-4xl mx-auto relative">
+      {/* Background Glows */}
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-40 left-0 w-[250px] h-[250px] bg-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
 
-      {/* Header Section */}
-      <div className="text-center mb-12 relative z-10 max-w-2xl mt-8">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white mb-4">
-          Create Pool
-        </h1>
+      <Link to="/pools" className="flex items-center gap-2 text-white/40 hover:text-white transition-colors mb-8 group w-fit">
+        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+        <span className="text-[10px] font-black uppercase tracking-widest">Back to Pools</span>
+      </Link>
+
+      {/* Header */}
+      <div className="flex flex-col gap-2 mb-12">
+        <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">Create Pool</h1>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Initialize a new liquidity pair and set protocol parameters.</p>
       </div>
 
-      {/* Create Pool Monolith */}
-      <div className="w-full max-w-xl glass-morphism p-8 rounded-lg relative z-10">
-
+      <div className="glass-morphism bg-white/[0.01] border border-white/5 p-10 relative overflow-hidden space-y-10">
+        
         {/* Select Pair Section */}
-        <div className="space-y-4 mb-4">
-          <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/30 px-1">Select Pair</label>
-          <div className="grid grid-cols-1 gap-3">
-            {/* Currency A */}
-            <div className="bg-white/[0.03] border border-white/[0.05] p-5 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
-              <div className="flex items-center space-x-6">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+             <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 1: Select Pair</label>
+             <Info size={12} className="text-white/10" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Token A */}
+            <div className="bg-white/[0.02] border border-white/5 p-6 flex flex-col gap-4">
+              <div className="flex justify-between items-center">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/20">First Asset</span>
+                <button 
+                  onClick={() => copyToken(tokenA.address || '', true)}
+                  className="text-white/20 hover:text-primary transition-colors"
+                >
+                  {copiedA ? <Check size={12} /> : <Copy size={12} />}
+                </button>
+              </div>
+              <div className="flex justify-between items-center">
                 <TokenSelector 
                   selectedToken={tokenA}
                   onSelect={setTokenA}
                   tokens={TOKENS}
+                  className="w-full"
                 />
-                <div>
-                  <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{tokenA.address ? `${tokenA.address.slice(0, 10)}...${tokenA.address.slice(-8)}` : 'No Address'}</div>
-                </div>
               </div>
-              <button 
-                onClick={() => copyToken(tokenA.address || '', true)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
-                title="Copy Address"
-              >
-                <span className="material-symbols-outlined text-sm">{copiedA ? 'check' : 'content_copy'}</span>
-              </button>
             </div>
 
-            {/* Currency B */}
-            <div className="bg-white/[0.03] border border-white/[0.05] p-5 rounded-lg flex items-center justify-between group hover:bg-white/[0.05] transition-all duration-300">
-              <div className="flex items-center space-x-6">
+            {/* Token B */}
+            <div className="bg-white/[0.02] border border-white/5 p-6 flex flex-col gap-4">
+              <div className="flex justify-between items-center">
+                <span className="text-[9px] font-black uppercase tracking-widest text-white/20">Second Asset</span>
+                <button 
+                  onClick={() => copyToken(tokenB.address || '', false)}
+                  className="text-white/20 hover:text-primary transition-colors"
+                >
+                  {copiedB ? <Check size={12} /> : <Copy size={12} />}
+                </button>
+              </div>
+              <div className="flex justify-between items-center">
                 <TokenSelector 
                   selectedToken={tokenB}
                   onSelect={setTokenB}
                   tokens={TOKENS}
+                  className="w-full"
                 />
-                <div>
-                  <div className="text-[9px] font-mono text-white/20 uppercase tracking-widest mt-0.5">{tokenB.address ? `${tokenB.address.slice(0, 10)}...${tokenB.address.slice(-8)}` : 'No Address'}</div>
-                </div>
               </div>
-              <button 
-                onClick={() => copyToken(tokenB.address || '', false)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/30 hover:text-primary hover:border-primary/50 transition-colors"
-                title="Copy Address"
-              >
-                <span className="material-symbols-outlined text-sm">{copiedB ? 'check' : 'content_copy'}</span>
-              </button>
+            </div>
+          </div>
+
+          {/* Token Order Summary */}
+          <div className="bg-white/[0.01] border border-white/5 p-4 flex flex-col gap-2">
+            <div className="flex items-center gap-4">
+              <span className="text-[8px] font-black uppercase text-primary tracking-widest w-16">Token0</span>
+              <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest truncate flex-1">{t0.address}</span>
+              <span className="text-[9px] font-black uppercase tracking-widest text-white/60">{t0.symbol}</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-[8px] font-black uppercase text-white/20 tracking-widest w-16">Token1</span>
+              <span className="text-[8px] font-mono text-white/30 uppercase tracking-widest truncate flex-1">{t1.address}</span>
+              <span className="text-[9px] font-black uppercase tracking-widest text-white/40">{t1.symbol}</span>
             </div>
           </div>
         </div>
 
-        {/* Token0 / Token1 Order */}
-        <div className="bg-white/[0.02] border border-white/5 p-4 rounded-lg mb-8 flex flex-col gap-2 relative overflow-hidden">
-          <div className="flex items-center gap-4">
-            <span className="text-[10px] font-black uppercase text-primary tracking-widest w-16">Token0:</span>
-            <span className="text-[10px] font-mono text-white/60 uppercase tracking-widest">{t0.address}</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/80 ml-auto">{t0.symbol}</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-[10px] font-black uppercase text-white/30 tracking-widest w-16">Token1:</span>
-            <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{t1.address}</span>
-            <span className="text-[10px] font-black uppercase tracking-widest text-white/60 ml-auto">{t1.symbol}</span>
-          </div>
-        </div>
-
         {/* Fee Tier Section */}
-        <div className="space-y-4 mb-8">
-          <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/30 px-1">Select Fee Tier</label>
-          <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 2: Select Fee Tier</label>
+            <Info size={12} className="text-white/10" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {feeTiers.map((tier) => (
-              <div
+              <button
                 key={tier.label}
                 onClick={() => setFeeTier(tier.label)}
-                className={`p-4 rounded-lg transition-all cursor-pointer group ${feeTier === tier.label
-                    ? 'bg-primary/5 border border-primary/40 ring-1 ring-primary/20 shadow-[0_0_15px_rgba(255,210,23,0.1)]'
-                    : 'bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-white/10'
-                  }`}
+                className={`p-5 text-left transition-all relative overflow-hidden group border ${
+                  feeTier === tier.label
+                    ? 'bg-primary/5 border-primary ring-1 ring-primary/20'
+                    : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10'
+                }`}
               >
-                <div className="flex justify-between items-start mb-2">
-                  <span className={`text-lg font-black tracking-tight ${feeTier === tier.label ? 'text-primary' : 'text-white'}`}>
+                <div className="relative z-10 flex flex-col gap-1">
+                  <span className={`text-xl font-black tracking-tighter ${feeTier === tier.label ? 'text-primary' : 'text-white'}`}>
                     {tier.label}
                   </span>
-                  <span className={`text-[9px] px-2 py-0.5 rounded uppercase font-black tracking-widest ${feeTier === tier.label ? 'bg-primary/20 text-primary' : 'bg-white/10 text-white/60'
-                    }`}>
-                    {tier.sub}
-                  </span>
+                  <div className="flex flex-col gap-0.5">
+                    <span className={`text-[8px] font-black tracking-widest uppercase ${feeTier === tier.label ? 'text-white' : 'text-white/40'}`}>
+                      {tier.sub}
+                    </span>
+                    <span className={`text-[9px] font-mono tracking-widest uppercase ${feeTier === tier.label ? 'text-primary/80' : 'text-white/20'}`}>
+                      Tick: {tier.spacing}
+                    </span>
+                  </div>
                 </div>
-                <span className={`text-[10px] font-mono uppercase tracking-widest block ${feeTier === tier.label ? 'text-primary/60' : 'text-white/20'}`}>
-                  tickSpacing: {tier.spacing}
-                </span>
-              </div>
+                {feeTier === tier.label && (
+                   <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-primary/10 rotate-45 border-t border-l border-primary/20"></div>
+                )}
+              </button>
             ))}
           </div>
         </div>
 
-        {/* Starting Price Section */}
-        <div className="space-y-4 mb-10">
-          <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/30 px-1">Starting Price Ratio</label>
-          <div className="grid grid-cols-4 gap-2 mb-4">
+        {/* Starting Price Ratio Section */}
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 3: Initial Rate</label>
+            <Info size={12} className="text-white/10" />
+          </div>
+          <div className="flex flex-wrap gap-2">
             {['1:1', '2:1', '1:2', 'CUSTOM'].map((opt) => (
               <button
                 key={opt}
                 onClick={() => setStartingRatio(opt)}
-                className={`py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${startingRatio === opt
-                    ? 'bg-primary/10 border border-primary/30 text-primary'
-                    : 'bg-white/[0.03] border border-white/5 hover:border-white/10 text-white/40 hover:text-white'
-                  }`}
+                className={`px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all border ${
+                  startingRatio === opt
+                    ? 'bg-primary/20 border-primary text-white'
+                    : 'bg-white/[0.02] border-white/5 text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
+                }`}
               >
                 {opt}
               </button>
             ))}
           </div>
+          
           {startingRatio === 'CUSTOM' && (
-            <div className="flex items-center justify-center space-x-4 bg-white/[0.02] border border-white/[0.05] p-4 rounded-lg animate-in fade-in slide-in-from-top-2 duration-300">
-              <div className="relative w-full">
-                <input
-                  className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
-                  type="text"
-                  defaultValue="1"
-                />
-              </div>
-              <span className="text-primary font-black text-2xl">:</span>
-              <div className="relative w-full">
-                <input
-                  className="w-full bg-white/[0.03] border border-white/10 text-center py-3 rounded-lg focus:outline-none focus:border-primary/50 focus:bg-white/[0.05] font-mono text-xl text-white transition-all"
-                  type="text"
-                  defaultValue="1"
-                />
-              </div>
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 bg-white/[0.02] border border-white/5 p-6 animate-in fade-in slide-in-from-top-2 duration-300">
+               <div className="space-y-2">
+                 <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenA.symbol}</p>
+                 <input
+                   className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
+                   type="text"
+                   defaultValue="1.0"
+                 />
+               </div>
+               <span className="text-primary font-black text-2xl mt-4">:</span>
+               <div className="space-y-2">
+                 <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenB.symbol}</p>
+                 <input
+                   className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
+                   type="text"
+                   defaultValue="1.0"
+                 />
+               </div>
             </div>
           )}
         </div>
 
-        {/* Primary Action */}
-        <button className="w-full bg-primary text-black font-black tracking-[0.2em] uppercase py-5 rounded-full text-[10px] gold-glow hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-3">
-          Initialize Pool
-        </button>
+        {/* Primary Action Button */}
+        <div className="pt-4">
+          <button className="w-full bg-primary text-black font-black tracking-[0.2em] uppercase py-6 text-[10px] gold-glow hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+            Initialize Liquidity Pool
+          </button>
+          <p className="text-[8px] font-black text-white/20 uppercase tracking-[0.2em] text-center mt-6">
+            By initializing this pool, you agree to the protocol's market making parameters.
+          </p>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
