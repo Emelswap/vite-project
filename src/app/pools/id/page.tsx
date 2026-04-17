@@ -70,6 +70,20 @@ export default function PoolDetailsPage() {
           </div>
         </header>
 
+        {/* Metric Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {[
+            { label: '24h Volume', val: '$42,901,482' },
+            { label: '7d Volume', val: '$210,482,109' },
+            { label: 'Fees (24h)', val: '$21,450' }
+          ].map((m, i) => (
+            <div key={i} className="glass-morphism bg-white/[0.01] border border-white/5 p-6 hover:bg-white/[0.02] transition-colors">
+              <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-2">{m.label}</p>
+              <p className="text-3xl font-black text-white tracking-tighter">{m.val}</p>
+            </div>
+          ))}
+        </div>
+
         {/* Bento Grid for Analytics */}
         <div className="grid grid-cols-12 gap-6 mb-12">
           {/* Price Chart Module (The Monolith) */}
@@ -173,19 +187,6 @@ export default function PoolDetailsPage() {
           </div>
         </div>
 
-        {/* Metric Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {[
-            { label: '24h Volume', val: '$42,901,482' },
-            { label: '7d Volume', val: '$210,482,109' },
-            { label: 'Fees (24h)', val: '$21,450' }
-          ].map((m, i) => (
-            <div key={i} className="glass-morphism bg-white/[0.01] border border-white/5 p-6 hover:bg-white/[0.02] transition-colors">
-              <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-2">{m.label}</p>
-              <p className="text-3xl font-black text-white tracking-tighter">{m.val}</p>
-            </div>
-          ))}
-        </div>
 
         {/* Recent Swaps Table */}
         <section className="glass-morphism bg-white/[0.01] border border-white/5 overflow-hidden">
