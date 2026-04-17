@@ -17,6 +17,9 @@ export default function PoolDetailsPage() {
     return (address === "0" || address === "0x0000000000000000000000000000000000000000") ? "NATIVE" : address;
   };
 
+  const t0 = { symbol: 'ETH', logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' };
+  const t1 = { symbol: 'USDC', logo: 'https://cryptologos.cc/logos/usd-coin-usdc-logo.png' };
+
   const addLiquidityPath = `/positions/create/currency0=${getCurrencyParam(token0Address)}&currency1=${getCurrencyParam(token1Address)}`;
 
   return (
@@ -188,56 +191,72 @@ export default function PoolDetailsPage() {
         </div>
 
 
-        {/* Recent Swaps Table */}
-        <section className="glass-morphism bg-white/[0.01] border border-white/5 overflow-hidden">
-          <div className="p-8 flex justify-between items-center border-b border-white/5 bg-black/20">
+        {/* Recent Swaps Table - Redesigned to match Profile Activity */}
+        <section className="bg-white/[0.01] rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
+          <div className="p-8 flex justify-between items-center border-b border-white/5 bg-white/[0.02]">
             <h3 className="text-2xl font-black tracking-tighter uppercase text-white">Recent Swaps</h3>
           </div>
-          <div className="overflow-x-auto no-scrollbar">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-white/[0.02]">
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black">Time</th>
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black">Type</th>
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black">ETH</th>
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black">USDT</th>
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black text-right">Value (USD)</th>
-                  <th className="px-8 py-5 text-[9px] uppercase tracking-[0.2em] text-white/30 font-black text-right">Txn Hash</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {[
-                  { time: '2 mins ago', type: 'Buy ETH', typeColor: 'text-primary', eth: '1.42', usdt: '3,524.00', usd: '$3,524.65', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
-                  { time: '5 mins ago', type: 'Sell ETH', typeColor: 'text-white/40', eth: '4.83', usdt: '12,000.00', usd: '$11,998.21', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
-                  { time: '8 mins ago', type: 'Buy ETH', typeColor: 'text-primary', eth: '0.85', usdt: '2,110.00', usd: '$2,109.35', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
-                  { time: '12 mins ago', type: 'Buy ETH', typeColor: 'text-primary', eth: '2.10', usdt: '5,212.00', usd: '$5,211.90', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
-                ].map((row, i) => (
-                  <tr key={i} className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
-                    <td className="px-8 py-6 text-[11px] font-black tracking-widest text-white/40 uppercase">{row.time}</td>
-                    <td className="px-8 py-6">
-                      <span className={`text-[10px] font-black uppercase tracking-[0.2em] px-2 py-1 bg-white/5 ${row.typeColor}`}>{row.type}</span>
-                    </td>
-                    <td className="px-8 py-6 text-sm font-black text-white tracking-tight">{row.eth}</td>
-                    <td className="px-8 py-6 text-sm font-mono text-white/60 tracking-widest">{row.usdt}</td>
-                    <td className="px-8 py-6 text-sm font-black text-white/80 tracking-tight text-right">{row.usd}</td>
-                    <td className="px-8 py-6 text-right">
-                      <a 
-                        href={`https://testnet.arcscan.app/tx/${row.hash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[10px] font-mono text-white/30 hover:text-primary transition-colors tracking-widest flex items-center justify-end gap-1.5 group/hash"
-                      >
-                        {row.hash.slice(0, 6)}...{row.hash.slice(-4)}
-                        <ExternalLink size={10} className="text-primary/60 shrink-0" />
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          
+          <div className="hidden md:grid grid-cols-[1fr_1.5fr_1fr_1.2fr_1.2fr_1fr] gap-4 px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 border-b border-white/5 bg-white/[0.02]">
+            <div>Time</div>
+            <div>Type</div>
+            <div>USD</div>
+            <div>Token0 Amount</div>
+            <div>Token1 Amount</div>
+            <div className="text-right">Txn Hash</div>
           </div>
-          <div className="p-6 bg-black/40 text-center border-t border-white/5 hover:bg-black/60 transition-colors cursor-pointer">
-            <button className="text-[10px] font-black text-white/30 hover:text-white transition-colors py-2 uppercase tracking-[0.2em] outline-none tracking-widest">
+
+          <div className="divide-y divide-white/5">
+            {[
+              { time: '2 mins ago', type: `Swap ${t1.symbol} for ${t0.symbol}`, t0Amt: '+1.42', t1Amt: '-3,524.00', usd: '$3,524.65', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
+              { time: '5 mins ago', type: `Swap ${t0.symbol} for ${t1.symbol}`, t0Amt: '-4.83', t1Amt: '+12,000.00', usd: '$11,998.21', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
+              { time: '8 mins ago', type: `Swap ${t1.symbol} for ${t0.symbol}`, t0Amt: '+0.85', t1Amt: '-2,110.00', usd: '$2,109.35', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
+              { time: '12 mins ago', type: `Swap ${t1.symbol} for ${t0.symbol}`, t0Amt: '+2.10', t1Amt: '-5,212.00', usd: '$5,211.90', hash: '0x42d5892cf6b3521a47dbead53a21235bf56e32ee805724d6ae7a208a39064c01' },
+            ].map((row, i) => (
+              <div key={i} className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr_1.2fr_1.2fr_1fr] gap-4 px-8 py-7 items-center hover:bg-white/[0.03] transition-all group cursor-pointer">
+                <div className="flex md:block justify-between items-center text-[10px] font-bold uppercase tracking-tight text-white/50">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Time</span>
+                  {row.time}
+                </div>
+
+                <div className="flex md:block justify-between items-center">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Type</span>
+                  <p className="font-bold text-xs text-white group-hover:text-primary transition-colors uppercase tracking-widest">{row.type}</p>
+                </div>
+
+                <div className="flex md:block justify-between items-center">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">USD</span>
+                  <p className="font-black text-xs text-white">{row.usd}</p>
+                </div>
+
+                <div className="flex md:block justify-between items-center">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Token0</span>
+                  <p className={`font-black text-[11px] tracking-tight ${row.t0Amt.startsWith('-') ? 'text-white/60' : 'text-primary'}`}>{row.t0Amt} {t0.symbol}</p>
+                </div>
+
+                <div className="flex md:block justify-between items-center">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Token1</span>
+                  <p className={`font-black text-[11px] tracking-tight ${row.t1Amt.startsWith('-') ? 'text-white/60' : 'text-primary'}`}>{row.t1Amt} {t1.symbol}</p>
+                </div>
+
+                <div className="flex md:block justify-between items-center md:text-right">
+                  <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Txn Hash</span>
+                  <a 
+                    href={`https://testnet.arcscan.app/tx/${row.hash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-mono text-white/30 hover:text-primary transition-colors tracking-widest flex items-center justify-end gap-1.5 group/hash"
+                  >
+                    {row.hash.slice(0, 6)}...{row.hash.slice(-4)}
+                    <ExternalLink size={10} className="text-primary/60 shrink-0" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="p-8 bg-white/[0.01] text-center border-t border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer group">
+            <button className="text-[10px] font-black text-white/30 group-hover:text-white transition-colors py-2 uppercase tracking-[0.2em] outline-none tracking-widest">
               Load More History
             </button>
           </div>
