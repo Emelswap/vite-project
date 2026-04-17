@@ -19,8 +19,14 @@ export default function CreatePositionPage() {
   const [feeTier, setFeeTier] = useState('0.3%');
   const [rangeType, setRangeType] = useState<'full' | 'custom'>('custom');
   const [strategy, setStrategy] = useState<'stable' | 'wide'>('wide');
+  const [minPrice, setMinPrice] = useState(71142);
+  const [maxPrice, setMaxPrice] = useState(141832);
   const [copied0, setCopied0] = useState(false);
   const [copied1, setCopied1] = useState(false);
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString();
+  };
 
   const feeTiers = [
     { label: '0.01%', sub: 'STABLE', spacing: '1' },
@@ -121,7 +127,7 @@ export default function CreatePositionPage() {
         {/* Step 2: Fee Tier */}
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 2: Fee Tier</label>
+            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 2: Select Fee Tier</label>
             <Info size={12} className="text-white/10" />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -152,9 +158,9 @@ export default function CreatePositionPage() {
         {/* Step 3: Price Range (Redesigned as Technical Corridor) */}
         <div className="space-y-8">
           <div className="flex justify-between items-center">
-            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 3: Price Range Corridor</label>
+            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 3: Select Price Range</label>
             <div className="flex bg-white/5 p-1 border border-white/10">
-               {['FULL RANGE', 'CUSTOM'].map((type) => (
+               {['CUSTOM', 'FULL RANGE'].map((type) => (
                  <button 
                   key={type}
                   onClick={() => setRangeType(type === 'FULL RANGE' ? 'full' : 'custom')}
@@ -170,72 +176,93 @@ export default function CreatePositionPage() {
             </div>
           </div>
 
+          {rangeType === 'custom' && (
+            <div className="flex gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+               {['STABLE', 'WIDE', 'ULTRA-WIDE'].map((strat) => (
+                 <button 
+                  key={strat}
+                  onClick={() => setStrategy(strat.toLowerCase() as any)}
+                  className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest border transition-all ${
+                    strategy === strat.toLowerCase()
+                      ? 'bg-primary/10 border-primary text-primary'
+                      : 'bg-white/[0.01] border-white/5 text-white/20 hover:text-white/40'
+                  }`}
+                 >
+                   {strat}
+                 </button>
+               ))}
+            </div>
+          )}
+
           <div className="bg-black/40 border border-white/5 overflow-hidden flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] relative">
-            {/* MIN BOUND */}
+            {/* MIN PRICE */}
             <div className={`p-8 flex flex-col items-center justify-center gap-4 transition-all ${rangeType === 'full' ? 'opacity-20' : 'opacity-100'}`}>
                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 flex items-center gap-2">
                  <div className="w-1.5 h-1.5 bg-primary/40"></div>
-                 [ MIN_BOUND ]
+                 [ MIN_PRICE ]
                </span>
                <div className="flex items-center gap-8">
-                  <button disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Minus size={14} /></button>
+                  <button onClick={() => setMinPrice(Math.max(0, minPrice - 100))} disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Minus size={14} /></button>
                   <div className="flex flex-col items-center">
-                    <span className="text-4xl font-black text-white tracking-tighter font-mono">{rangeType === 'full' ? '0' : '71,142'}</span>
+                    {rangeType === 'full' ? (
+                      <span className="text-4xl font-black text-white tracking-tighter font-mono">0</span>
+                    ) : (
+                      <input 
+                        type="text"
+                        className="bg-transparent border-none text-3xl font-black text-center w-full focus:ring-0 text-white outline-none font-mono tracking-tighter p-0"
+                        value={formatPrice(minPrice)}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/,/g, '');
+                          if (val === '' || !isNaN(Number(val))) setMinPrice(val === '' ? 0 : Number(val));
+                        }}
+                      />
+                    )}
                     <span className="text-[8px] font-mono text-primary/60 uppercase tracking-[0.2em] mt-1">-14.2% OFFSET</span>
                   </div>
-                  <button disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Plus size={14} /></button>
+                  <button onClick={() => setMinPrice(minPrice + 100)} disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Plus size={14} /></button>
                </div>
             </div>
 
             {/* CENTRAL ANCHOR */}
             <div className="bg-white/5 border-y md:border-y-0 md:border-x border-white/5 flex flex-col items-center justify-center px-6 py-4 md:py-0">
                <div className="flex flex-col items-center relative gap-2">
-                 <div className="h-4 w-[1px] bg-primary/40"></div>
-                 <span className="text-[8px] font-black tracking-[0.3em] text-primary uppercase">LIVE_PRICE</span>
+                 <span className="text-[8px] font-black tracking-[0.3em] text-primary uppercase">PRICE</span>
                  <p className="text-sm font-black text-white font-mono tracking-tighter">70,833.90</p>
                  <span className="text-[7px] font-bold text-white/20 uppercase tracking-widest">{t1.symbol}/{t0.symbol}</span>
-                 <div className="h-4 w-[1px] bg-primary/40"></div>
                </div>
             </div>
 
-            {/* MAX BOUND */}
+            {/* MAX PRICE */}
             <div className={`p-8 flex flex-col items-center justify-center gap-4 transition-all ${rangeType === 'full' ? 'opacity-20' : 'opacity-100'}`}>
                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 flex items-center gap-2">
-                 [ MAX_BOUND ]
+                 [ MAX_PRICE ]
                  <div className="w-1.5 h-1.5 bg-primary/40"></div>
                </span>
                <div className="flex items-center gap-8">
-                  <button disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Minus size={14} /></button>
+                  <button onClick={() => setMaxPrice(Math.max(minPrice + 100, maxPrice - 100))} disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Minus size={14} /></button>
                   <div className="flex flex-col items-center">
                     {rangeType === 'full' ? (
-                      <Infinity size={32} className="text-white opacity-40 my-1" />
+                      <Infinity size={32} className="text-white opacity-40 my-1 font-mono" />
                     ) : (
-                      <>
-                        <span className="text-4xl font-black text-white tracking-tighter font-mono">141,832</span>
+                      <div className="flex flex-col items-center">
+                        <input 
+                          type="text"
+                          className="bg-transparent border-none text-3xl font-black text-center w-full focus:ring-0 text-white outline-none font-mono tracking-tighter p-0"
+                          value={formatPrice(maxPrice)}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/,/g, '');
+                            if (val === '' || !isNaN(Number(val))) setMaxPrice(val === '' ? 0 : Number(val));
+                          }}
+                        />
                         <span className="text-[8px] font-mono text-primary/60 uppercase tracking-[0.2em] mt-1">+100.2% OFFSET</span>
-                      </>
+                      </div>
                     )}
                   </div>
-                  <button disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Plus size={14} /></button>
+                  <button onClick={() => setMaxPrice(maxPrice + 100)} disabled={rangeType === 'full'} className="text-white/10 hover:text-primary transition-colors disabled:opacity-0 p-2 border border-white/5 hover:border-primary/20"><Plus size={14} /></button>
                </div>
             </div>
           </div>
           
-          <div className="flex gap-4">
-             {['STABLE', 'WIDE', 'ULTRA-WIDE'].map((strat) => (
-               <button 
-                key={strat}
-                onClick={() => setStrategy(strat.toLowerCase() as any)}
-                className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest border transition-all ${
-                  strategy === strat.toLowerCase()
-                    ? 'bg-primary/10 border-primary text-primary'
-                    : 'bg-white/[0.01] border-white/5 text-white/20 hover:text-white/40'
-                }`}
-               >
-                 {strat}
-               </button>
-             ))}
-          </div>
         </div>
 
         {/* Step 4: Deposit Amount */}
