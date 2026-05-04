@@ -63,8 +63,7 @@ export default function CreatePositionPage() {
 
       {/* Header */}
       <div className="flex flex-col gap-2 mb-12">
-        <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">Mint Position</h1>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Concentrate your liquidity and optimize fee earnings.</p>
+        <h1 className="text-4xl font-black text-white tracking-tighter leading-none">Mint Position</h1>
       </div>
 
       <div className="glass-morphism bg-white/[0.01] border border-white/5 p-10 relative overflow-hidden space-y-12">
