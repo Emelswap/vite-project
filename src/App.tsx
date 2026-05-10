@@ -12,6 +12,7 @@ import PoolDetailsPage from "@/app/pools/id/page";
 import CreatePositionsPage from "@/app/positions/create/page";
 import PositionDetailsPage from "@/app/positions/id/page";
 
+
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
