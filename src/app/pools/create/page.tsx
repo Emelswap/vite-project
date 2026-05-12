@@ -69,8 +69,8 @@ export default function CreatePoolPage() {
 
       {/* Header */}
       <div className="flex flex-col gap-2 mb-12">
-        <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">Create Pool</h1>
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Initialize a new liquidity pair and set protocol parameters.</p>
+        <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-none">Create Pool</h1>
+        {/* <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Initialize a new liquidity pair and set protocol parameters.</p> */}
       </div>
 
       <div className="glass-morphism bg-white/[0.01] border border-white/5 p-10 relative overflow-hidden space-y-10">
