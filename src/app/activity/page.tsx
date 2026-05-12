@@ -50,31 +50,39 @@ export default function ActivityPage() {
     <main className="pt-8 pb-40 px-6 max-w-[1200px] mx-auto relative z-10">
       
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-        <div className="flex flex-wrap gap-6 w-full md:w-auto">
-          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-center w-full sm:w-auto min-w-[240px] relative overflow-hidden">
+      <div className="flex flex-col items-start mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
             <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-primary/5 blur-[60px] rounded-full pointer-events-none"></div>
-            <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">Total Value Locked</p>
-            <p className="text-4xl font-black tracking-tighter text-white inline-block relative z-10">$1.42B</p>
+            <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">Total TVL</p>
+            <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$1.42B</p>
           </div>
           
-          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col justify-center w-full sm:w-auto min-w-[240px] relative overflow-hidden">
+          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
             <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-white/5 blur-[60px] rounded-full pointer-events-none"></div>
             <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">1D Volume</p>
-            <p className="text-4xl font-black tracking-tighter text-white inline-block relative z-10">$210.4M</p>
+            <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$210.4M</p>
           </div>
-        </div>
-        <button className="bg-primary text-black px-5 py-2.5 rounded-full font-black text-[10px] tracking-[0.1em] flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg gold-glow">
-          <span className="material-symbols-outlined text-sm font-bold">download</span>
-          EXPORT CSV
-        </button>
+
+          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+            <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-primary/3 blur-[60px] rounded-full pointer-events-none"></div>
+            <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">All Time Volume</p>
+            <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$4.87B</p>
+          </div>
+      </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-10 border-b border-white/10 mb-10">
-        <button className="pb-5 text-primary border-b-2 border-primary font-black uppercase tracking-widest text-xs flex items-center gap-3">
-          Activity 
-          <span className="bg-primary text-black text-[10px] px-2 py-0.5 rounded-full font-black">24</span>
+      {/* Tabs & Actions */}
+      <div className="flex justify-between items-center border-b border-white/10 mb-10">
+        <div className="flex gap-10">
+          <button className="pb-5 text-primary border-b-2 border-primary font-black uppercase tracking-widest text-xs flex items-center gap-3">
+            Activity 
+            <span className="bg-primary text-black text-[10px] px-2 py-0.5 rounded-full font-black">24</span>
+          </button>
+        </div>
+        <button className="bg-primary text-black px-5 py-2.5 rounded-full font-black text-[10px] tracking-[0.1em] flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg gold-glow mb-4">
+          <span className="material-symbols-outlined text-sm font-bold">download</span>
+          EXPORT CSV
         </button>
       </div>
 

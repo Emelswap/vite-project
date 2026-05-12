@@ -74,20 +74,24 @@ export default function PoolDetailsPage() {
         </header>
 
         {/* Metric Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
           {[
-            { label: '24h Volume', val: '$42,901,482' },
-            { label: '7d Volume', val: '$210,482,109' },
-            { label: 'Fees (24h)', val: '$21,450' }
+            { label: '24h Volume', val: '$42.9M' },
+            { label: '7d Volume', val: '$210.5M' },
+            { label: 'All Time Volume', val: '$4.87B' },
+            { label: '24h Fees', val: '$21.4K' },
+            { label: '7d Fees', val: '$24.2M' },
+            { label: 'All Time Fees', val: '$146.2M' }
           ].map((m, i) => (
-            <div key={i} className="glass-morphism bg-white/[0.01] border border-white/5 p-6 hover:bg-white/[0.02] transition-colors">
-              <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-2">{m.label}</p>
-              <p className="text-3xl font-black text-white tracking-tighter">{m.val}</p>
+            <div key={i} className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+              <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1">{m.label}</p>
+              <p className="text-2xl font-black text-white tracking-tighter">{m.val}</p>
             </div>
           ))}
         </div>
+        {/*  */}
 
-        {/* Bento Grid for Analytics */}
+        {/* Bento Grid for Analytics */} 
         <div className="grid grid-cols-12 gap-6 mb-12">
           {/* Price Chart Module (The Monolith) */}
           <div className="col-span-12 lg:col-span-8 glass-morphism bg-white/[0.01] border border-white/5 p-8 relative overflow-hidden">
@@ -102,37 +106,8 @@ export default function PoolDetailsPage() {
                 <button className="px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">1M</button>
                 <button className="px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">1Y</button>
               </div>
-            </div>
+            </div>         
 
-            {/* Abstract Chart Visualization */}
-            <div className="h-[400px] w-full flex items-end gap-[2px] group">
-              <div className="flex-1 bg-white/[0.03] h-[30%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[45%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[40%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[60%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[55%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-primary/40 h-[70%] border-t border-primary/50 relative group-hover:bg-primary/50 transition-all"></div>
-              <div className="flex-1 bg-primary/30 h-[65%] border-t border-primary/50 relative group-hover:bg-primary/40 transition-all"></div>
-              <div className="flex-1 bg-primary/20 h-[80%] border-t border-primary/50 relative group-hover:bg-primary/30 transition-all"></div>
-              <div className="flex-1 bg-primary/50 h-[90%] border-t border-primary shadow-[0_0_20px_rgba(255,210,23,0.3)] relative group-hover:bg-primary/60 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[85%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[75%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[80%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[95%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/10 h-[85%] hover:bg-primary/20 transition-all border-t border-white/20 relative"></div>
-              <div className="flex-1 bg-white/[0.03] h-[70%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[60%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[50%] hover:bg-primary/20 transition-all"></div>
-              <div className="flex-1 bg-white/[0.03] h-[45%] hover:bg-primary/20 transition-all"></div>
-            </div>
-
-            <div className="absolute inset-x-8 bottom-8 flex justify-between text-[10px] uppercase tracking-widest text-white/20 font-black border-t border-white/5 pt-4">
-              <span>JAN 10</span>
-              <span>JAN 15</span>
-              <span>JAN 20</span>
-              <span>JAN 25</span>
-              <span className="text-primary/60">TODAY</span>
-            </div>
           </div>
 
           {/* Stats Column */}
@@ -176,7 +151,15 @@ export default function PoolDetailsPage() {
               </div>
             </div>
 
-            {/* Hook Details */}
+             {/* Hook Details */}
+
+     
+
+
+          </div>
+        </div>
+
+               {/* Hook Details */}
             <div className="glass-morphism bg-white/[0.01] border border-white/5 p-6">
               <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
                 <p className="text-[10px] uppercase tracking-widest text-white/30 font-black">Active Hook</p>
@@ -186,10 +169,7 @@ export default function PoolDetailsPage() {
               <p className="text-[10px] font-medium text-white/50 leading-relaxed">{hookData.desc}</p>
             </div>
 
-
-          </div>
-        </div>
-
+        {/*  */}
 
         {/* Recent Swaps Table - Redesigned to match Profile Activity */}
         <section className="bg-white/[0.01] rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
