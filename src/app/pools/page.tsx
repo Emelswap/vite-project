@@ -93,40 +93,34 @@ export default function PoolsPage() {
       {/* Header */}
       {/* <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
         <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-white">
+          <h1 className="text-3xl md:text-3xl font-black tracking-tighter text-white">
             Liquidity Pools
           </h1>
-        </div>
-        <div className="flex gap-4">
-          <Link to="/pools/create" className="bg-primary text-black px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-[0.2em] transition-all gold-glow hover:brightness-110 active:scale-95 flex items-center gap-3">
-            <Plus size={16} strokeWidth={3} />
-            Create Pool
-          </Link>
         </div>
       </header> */}
 
       {/* Analytics Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 mb-12">
-        <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-6 mb-12">
+        <div className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
           <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">Total TVL</p>
           <h4 className="text-2xl font-black text-white tracking-tighter">$4.82B</h4>
           <p className="text-tertiary-dim text-xs font-bold mt-2">+2.4% last 24h</p>
         </div>
-        <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+        <div className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
           <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">1D Vol</p>
           <h4 className="text-2xl font-black text-white tracking-tighter">$1.15B</h4>
           <p className="text-tertiary-dim text-xs font-bold mt-2">+12.8% last 24h</p>
         </div>
-        <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+        <div className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
           <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">All Time Volume</p>
           <h4 className="text-2xl font-black text-white tracking-tighter">$48.7B</h4>
         </div>
-        <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+        <div className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
           <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">1D Fees</p>
           <h4 className="text-2xl font-black text-white tracking-tighter">$3.45M</h4>
           <p className="text-tertiary-dim text-xs font-bold mt-2">Shared with LPs</p>
         </div>
-        <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+        <div className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
           <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] mb-1">All Time Fees</p>
           <h4 className="text-2xl font-black text-white tracking-tighter">$146.2M</h4>
         </div>
@@ -151,7 +145,7 @@ export default function PoolsPage() {
           </Link>
         </div>
       </div>
-      
+
 
       {/* Pools Grid */}
       <div className="grid grid-cols-1 gap-6">
@@ -191,36 +185,36 @@ export default function PoolsPage() {
                     ))}
                   </div>
                   <div className="flex items-center gap-3">
-                    <h3 className="text-xl font-black text-white tracking-tight">{pool.pair}</h3>
+                    <h3 className="text-md font-black text-white tracking-tight">{pool.pair}</h3>
                     {pool.isHot && (
-                      <span className="bg-primary/20 text-primary text-[9px] font-black px-2 py-0.5 rounded uppercase animate-pulse">Hot</span>
+                      <span className="bg-primary/20 text-primary text-[10px] font-black px-2 py-0.5 rounded uppercase animate-pulse">Hot</span>
                     )}
                   </div>
                 </div>
                 {/* Fee Tier */}
                 <div className="flex md:block justify-between items-center mt-6 md:mt-0">
-                  <span className="md:hidden text-[9px] font-black text-white/30 uppercase">Fee Tier</span>
-                  <span className="text-[11px] font-black bg-white/10 text-white/60 px-2.5 py-1 rounded float-right">{pool.fee}</span>
+                  <span className="md:hidden text-[10px] font-black text-white/30 uppercase">Fee Tier</span>
+                  <span className="text-md font-black bg-white/10 text-white/60 px-2.5 py-1 rounded float-right">{pool.fee}</span>
                 </div>
                 {/* Liquidity */}
                 <div className="flex md:block justify-between items-center mt-2 md:mt-0">
-                  <span className="md:hidden text-[9px] font-black text-white/30 uppercase">Liquidity</span>
-                  <p className="text-lg font-black text-white text-right tracking-tight">{pool.liquidity}</p>
+                  <span className="md:hidden text-[10px] font-black text-white/30 uppercase">Liquidity</span>
+                  <p className="text-md font-black text-white text-right tracking-tight">{pool.liquidity}</p>
                 </div>
                 {/* Pool APR */}
                 <div className="flex md:block justify-between items-center mt-2 md:mt-0">
-                  <span className="md:hidden text-[9px] font-black text-white/30 uppercase">Pool APR</span>
-                  <p className="text-lg font-black text-tertiary-dim text-right tracking-tight">{pool.apr}</p>
+                  <span className="md:hidden text-[10px] font-black text-white/30 uppercase">Pool APR</span>
+                  <p className="text-md font-black text-tertiary-dim text-right tracking-tight">{pool.apr}</p>
                 </div>
                 {/* 1D Vol */}
                 <div className="flex md:block justify-between items-center mt-2 md:mt-0">
-                  <span className="md:hidden text-[9px] font-black text-white/30 uppercase">1D Vol</span>
-                  <p className="text-lg font-black text-white text-right tracking-tight leading-none">{pool.volume1d}</p>
+                  <span className="md:hidden text-[10px] font-black text-white/30 uppercase">1D Vol</span>
+                  <p className="text-md font-black text-white text-right tracking-tight leading-none">{pool.volume1d}</p>
                 </div>
                 {/* 30D Vol */}
                 <div className="flex md:block justify-between items-center mt-2 md:mt-0">
-                  <span className="md:hidden text-[9px] font-black text-white/30 uppercase">30D Vol</span>
-                  <p className="text-lg font-black text-white/60 text-right tracking-tight leading-none">{pool.volume30d}</p>
+                  <span className="md:hidden text-[12px] font-black text-white/30 uppercase">30D Vol</span>
+                  <p className="text-md font-black text-white/60 text-right tracking-tight leading-none">{pool.volume30d}</p>
                 </div>
               </div>
             );

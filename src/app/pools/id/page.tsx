@@ -36,15 +36,15 @@ export default function PoolDetailsPage() {
           <div className="flex items-center gap-6">
             <div className="flex -space-x-4">
               <div className="w-16 h-16 rounded-full border-4 border-black overflow-hidden bg-black flex items-center justify-center relative z-[2]">
-                <img className="w-full h-full object-contain grayscale transition-all duration-500 hover:grayscale-0" alt="ETH" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXybhITYp9WXpTJN179H2b1uf4LtIXUPfE7MGSX8enKDACJehiY52Un6ORUcgNJVusj9wAokDwCj3R5pr89ac6YZuOijRGc8WJWpWhBsUjwPSigUgeXVNXkUJbC8HX3KXMBUFA4ZfBf0SayK4nggIKiqy4AWvkFg3_pFUtLOpsvqANIEYmot2SJ6RrXb8mytnZ6ooK69T8XTgtYQ-PRCNy-Et2IxvuSa9t1Bh-27egOH-McFlA3eHh-DgqCWeq4ngj9sWZlWiYSDGo"/>
+                <img className="w-full h-full object-contain grayscale transition-all duration-500 hover:grayscale-0" alt="ETH" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXybhITYp9WXpTJN179H2b1uf4LtIXUPfE7MGSX8enKDACJehiY52Un6ORUcgNJVusj9wAokDwCj3R5pr89ac6YZuOijRGc8WJWpWhBsUjwPSigUgeXVNXkUJbC8HX3KXMBUFA4ZfBf0SayK4nggIKiqy4AWvkFg3_pFUtLOpsvqANIEYmot2SJ6RrXb8mytnZ6ooK69T8XTgtYQ-PRCNy-Et2IxvuSa9t1Bh-27egOH-McFlA3eHh-DgqCWeq4ngj9sWZlWiYSDGo" />
               </div>
               <div className="w-16 h-16 rounded-full border-4 border-black overflow-hidden bg-black flex items-center justify-center relative z-[1]">
-                <img className="w-full h-full object-contain grayscale transition-all duration-500 hover:grayscale-0" alt="USDC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_If4tb7GbsCftgddAVbwTwjqScGKRJPxgOWRvTG96x87nuLhhU-Wt9H6U2RjSZ1Hv-QRBFCcn3Cg3O6KlF_qEB35wjoVYmi9TRzfpCSk1hcWFfZhrOMN_M2I1Mb-VUY4sjXHfJThKk67GnCNy56hx-W9R6os6euq7a6OMeOBKd0ycGISaB-22yYnhp5zDcGeTWBllF1G36gYZbRGH98jfMrHau9MiHBG17Rc0gTMs_azsK5ehOt0ruEdNprRma46ThaoFtWcGshA-"/>
+                <img className="w-full h-full object-contain grayscale transition-all duration-500 hover:grayscale-0" alt="USDC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_If4tb7GbsCftgddAVbwTwjqScGKRJPxgOWRvTG96x87nuLhhU-Wt9H6U2RjSZ1Hv-QRBFCcn3Cg3O6KlF_qEB35wjoVYmi9TRzfpCSk1hcWFfZhrOMN_M2I1Mb-VUY4sjXHfJThKk67GnCNy56hx-W9R6os6euq7a6OMeOBKd0ycGISaB-22yYnhp5zDcGeTWBllF1G36gYZbRGH98jfMrHau9MiHBG17Rc0gTMs_azsK5ehOt0ruEdNprRma46ThaoFtWcGshA-" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-4xl font-black tracking-tighter uppercase text-white">ETH / USDC</h1>
+                <h1 className="text-3xl font-black tracking-tighter uppercase text-white">ETH / USDC</h1>
                 <span className="bg-white/10 px-3 py-1 text-[10px] font-black tracking-widest text-white/60 uppercase">0.05% Fee</span>
               </div>
               <div className="flex items-center gap-4 mt-2">
@@ -64,7 +64,7 @@ export default function PoolDetailsPage() {
             <Link to="/" className="flex-1 md:flex-none border border-white/10 text-white px-8 py-3 font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center hover:bg-white/5 transition-all">
               Swap
             </Link>
-            <Link 
+            <Link
               to={addLiquidityPath}
               className="flex-1 md:flex-none bg-primary text-black px-8 py-3 font-black text-[10px] uppercase tracking-[0.2em] transition-all gold-glow hover:brightness-110 active:scale-95 flex items-center justify-center text-center"
             >
@@ -74,7 +74,7 @@ export default function PoolDetailsPage() {
         </header>
 
         {/* Metric Grid */}
-       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-6 mb-12">
           {[
             { label: '24h Volume', val: '$42.9M' },
             { label: '7d Volume', val: '$210.5M' },
@@ -83,7 +83,7 @@ export default function PoolDetailsPage() {
             { label: '7d Fees', val: '$24.2M' },
             { label: 'All Time Fees', val: '$146.2M' }
           ].map((m, i) => (
-            <div key={i} className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
+            <div key={i} className="relative overflow-hidden w-full sm:w-auto min-w-[240px]">
               <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1">{m.label}</p>
               <p className="text-2xl font-black text-white tracking-tighter">{m.val}</p>
             </div>
@@ -91,7 +91,7 @@ export default function PoolDetailsPage() {
         </div>
         {/*  */}
 
-        {/* Bento Grid for Analytics */} 
+        {/* Bento Grid for Analytics */}
         <div className="grid grid-cols-12 gap-6 mb-12">
           {/* Price Chart Module (The Monolith) */}
           <div className="col-span-12 lg:col-span-8 glass-morphism bg-white/[0.01] border border-white/5 p-8 relative overflow-hidden">
@@ -106,7 +106,7 @@ export default function PoolDetailsPage() {
                 <button className="px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">1M</button>
                 <button className="px-4 py-1.5 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">1Y</button>
               </div>
-            </div>         
+            </div>
 
           </div>
 
@@ -115,7 +115,7 @@ export default function PoolDetailsPage() {
             {/* TVL Card */}
             <div className="glass-morphism bg-white/[0.01] border border-white/5 p-8 flex flex-col justify-center">
               <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-2">Total Value Locked</p>
-              <p className="text-5xl font-black tracking-tighter text-white inline-block">$142.8M</p>
+              <p className="text-3xl font-black tracking-tighter text-white inline-block">$142.8M</p>
               <div className="mt-6 pt-6 border-t border-white/5">
                 <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1">Total APR</p>
                 <p className="text-3xl font-black text-primary tracking-tight">24.8%</p>
@@ -133,7 +133,7 @@ export default function PoolDetailsPage() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full border border-white/10 bg-black flex items-center justify-center overflow-hidden">
-                       <img className="w-full h-full object-contain" alt="ETH" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXybhITYp9WXpTJN179H2b1uf4LtIXUPfE7MGSX8enKDACJehiY52Un6ORUcgNJVusj9wAokDwCj3R5pr89ac6YZuOijRGc8WJWpWhBsUjwPSigUgeXVNXkUJbC8HX3KXMBUFA4ZfBf0SayK4nggIKiqy4AWvkFg3_pFUtLOpsvqANIEYmot2SJ6RrXb8mytnZ6ooK69T8XTgtYQ-PRCNy-Et2IxvuSa9t1Bh-27egOH-McFlA3eHh-DgqCWeq4ngj9sWZlWiYSDGo"/>
+                      <img className="w-full h-full object-contain" alt="ETH" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXybhITYp9WXpTJN179H2b1uf4LtIXUPfE7MGSX8enKDACJehiY52Un6ORUcgNJVusj9wAokDwCj3R5pr89ac6YZuOijRGc8WJWpWhBsUjwPSigUgeXVNXkUJbC8HX3KXMBUFA4ZfBf0SayK4nggIKiqy4AWvkFg3_pFUtLOpsvqANIEYmot2SJ6RrXb8mytnZ6ooK69T8XTgtYQ-PRCNy-Et2IxvuSa9t1Bh-27egOH-McFlA3eHh-DgqCWeq4ngj9sWZlWiYSDGo" />
                     </div>
                     <span className="text-xs font-black text-white uppercase tracking-widest">ETH</span>
                   </div>
@@ -142,7 +142,7 @@ export default function PoolDetailsPage() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full border border-white/10 bg-black flex items-center justify-center overflow-hidden">
-                       <img className="w-full h-full object-contain" alt="USDC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_If4tb7GbsCftgddAVbwTwjqScGKRJPxgOWRvTG96x87nuLhhU-Wt9H6U2RjSZ1Hv-QRBFCcn3Cg3O6KlF_qEB35wjoVYmi9TRzfpCSk1hcWFfZhrOMN_M2I1Mb-VUY4sjXHfJThKk67GnCNy56hx-W9R6os6euq7a6OMeOBKd0ycGISaB-22yYnhp5zDcGeTWBllF1G36gYZbRGH98jfMrHau9MiHBG17Rc0gTMs_azsK5ehOt0ruEdNprRma46ThaoFtWcGshA-"/>
+                      <img className="w-full h-full object-contain" alt="USDC" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_If4tb7GbsCftgddAVbwTwjqScGKRJPxgOWRvTG96x87nuLhhU-Wt9H6U2RjSZ1Hv-QRBFCcn3Cg3O6KlF_qEB35wjoVYmi9TRzfpCSk1hcWFfZhrOMN_M2I1Mb-VUY4sjXHfJThKk67GnCNy56hx-W9R6os6euq7a6OMeOBKd0ycGISaB-22yYnhp5zDcGeTWBllF1G36gYZbRGH98jfMrHau9MiHBG17Rc0gTMs_azsK5ehOt0ruEdNprRma46ThaoFtWcGshA-" />
                     </div>
                     <span className="text-xs font-black text-white uppercase tracking-widest">USDC</span>
                   </div>
@@ -151,32 +151,32 @@ export default function PoolDetailsPage() {
               </div>
             </div>
 
-             {/* Hook Details */}
+            {/* Hook Details */}
 
-     
+
 
 
           </div>
         </div>
 
-               {/* Hook Details */}
-            <div className="glass-morphism bg-white/[0.01] border border-white/5 p-6">
-              <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
-                <p className="text-[10px] uppercase tracking-widest text-white/30 font-black">Active Hook</p>
-                <div className="bg-primary/10 text-primary text-[8px] font-black px-2 py-0.5 uppercase tracking-widest border border-primary/20">V4</div>
-              </div>
-              <p className="text-sm font-black text-white mb-2">{hookData.name}</p>
-              <p className="text-[10px] font-medium text-white/50 leading-relaxed">{hookData.desc}</p>
-            </div>
+        {/* Hook Details */}
+        <div className="glass-morphism bg-white/[0.01] border border-white/5 p-6">
+          <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
+            <p className="text-[10px] uppercase tracking-widest text-white/30 font-black">Active Hook</p>
+            <div className="bg-primary/10 text-primary text-[8px] font-black px-2 py-0.5 uppercase tracking-widest border border-primary/20">V4</div>
+          </div>
+          <p className="text-sm font-black text-white mb-2">{hookData.name}</p>
+          <p className="text-[10px] font-medium text-white/50 leading-relaxed">{hookData.desc}</p>
+        </div>
 
         {/*  */}
 
         {/* Recent Swaps Table - Redesigned to match Profile Activity */}
         <section className="bg-white/[0.01] rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
           <div className="p-8 flex justify-between items-center border-b border-white/5 bg-white/[0.02]">
-            <h3 className="text-2xl font-black tracking-tighter uppercase text-white">Recent Swaps</h3>
+            <h3 className="text-[20px] font-black tracking-tighter uppercase text-white">Recent Swaps</h3>
           </div>
-          
+
           <div className="hidden md:grid grid-cols-[1fr_1.5fr_1fr_1.2fr_1.2fr_1fr] gap-4 px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 border-b border-white/5 bg-white/[0.02]">
             <div>Time</div>
             <div>Type</div>
@@ -221,7 +221,7 @@ export default function PoolDetailsPage() {
 
                 <div className="flex md:block justify-between items-center md:text-right">
                   <span className="md:hidden text-[9px] font-black text-white/20 uppercase tracking-widest">Txn Hash</span>
-                  <a 
+                  <a
                     href={`https://testnet.arcscan.app/tx/${row.hash}`}
                     target="_blank"
                     rel="noopener noreferrer"

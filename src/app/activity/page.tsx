@@ -51,21 +51,18 @@ export default function ActivityPage() {
       
       {/* Header Section */}
       <div className="flex flex-col items-start mb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
-            <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-primary/5 blur-[60px] rounded-full pointer-events-none"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-6">
+          <div className="relative overflow-hidden w-full sm:w-auto min-w-[200px]">
             <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">Total TVL</p>
             <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$1.42B</p>
           </div>
           
-          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
-            <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-white/5 blur-[60px] rounded-full pointer-events-none"></div>
+          <div className="relative overflow-hidden w-full sm:w-auto min-w-[200px]">
             <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">1D Volume</p>
             <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$210.4M</p>
           </div>
 
-          <div className="relative p-6 bg-white/[0.01] border-l border-white/5 rounded-lg overflow-hidden w-full sm:w-auto min-w-[240px]">
-            <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-primary/3 blur-[60px] rounded-full pointer-events-none"></div>
+          <div className="relative overflow-hidden w-full sm:w-auto min-w-[200px]">
             <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-1 relative z-10">All Time Volume</p>
             <p className="text-2xl font-black tracking-tighter text-white inline-block relative z-10">$4.87B</p>
           </div>

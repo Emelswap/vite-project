@@ -69,19 +69,19 @@ export default function CreatePoolPage() {
 
       {/* Header */}
       <div className="flex flex-col gap-2 mb-12">
-        <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-none">Create Pool</h1>
+        <h1 className="text-3xl md:text-3xl font-black text-white tracking-tighter leading-none">Create Pool</h1>
         {/* <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Initialize a new liquidity pair and set protocol parameters.</p> */}
       </div>
 
       <div className="glass-morphism bg-white/[0.01] border border-white/5 p-10 relative overflow-hidden space-y-10">
-        
+
         {/* Select Pair Section */}
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-             <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 1: Select Pair</label>
-             <Info size={12} className="text-white/10" />
+            <label className="text-[10px] uppercase tracking-[0.2em] font-black text-white/20">Step 1: Select Pair</label>
+            <Info size={12} className="text-white/10" />
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Token A */}
             <div className="bg-white/[0.02] border border-white/5 p-6 flex flex-col gap-4">
@@ -89,7 +89,7 @@ export default function CreatePoolPage() {
                 <span className="text-[9px] font-black uppercase tracking-widest text-white/20">First Asset</span>
               </div>
               <div className="flex justify-between items-center">
-                <TokenSelector 
+                <TokenSelector
                   selectedToken={tokenA}
                   onSelect={setTokenA}
                   tokens={TOKENS}
@@ -104,7 +104,7 @@ export default function CreatePoolPage() {
                 <span className="text-[9px] font-black uppercase tracking-widest text-white/20">Second Asset</span>
               </div>
               <div className="flex justify-between items-center">
-                <TokenSelector 
+                <TokenSelector
                   selectedToken={tokenB}
                   onSelect={setTokenB}
                   tokens={TOKENS}
@@ -120,44 +120,44 @@ export default function CreatePoolPage() {
               <div className="flex items-start gap-4 group/t0">
                 <span className="text-primary text-[10px] font-black w-6">[0]</span>
                 <div className="flex flex-col gap-1 flex-1">
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-2">
-                       <span className="text-white text-[10px] font-black uppercase">{t0.symbol}</span>
-                       <span className="text-white/20 text-[8px] uppercase tracking-widest font-black">Token0</span>
-                     </div>
-                     <button 
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white text-[10px] font-black uppercase">{t0.symbol}</span>
+                      <span className="text-white/20 text-[8px] uppercase tracking-widest font-black">Token0</span>
+                    </div>
+                    <button
                       onClick={() => copyToClipboard(t0.address || '', true)}
                       className={`transition-colors p-1 ${copied0 ? 'text-primary' : 'text-white/10 hover:text-primary'}`}
                       title="Copy Address"
-                     >
-                       {copied0 ? <Check size={10} /> : <Copy size={10} />}
-                     </button>
-                   </div>
-                   <span className="text-white/40 text-[9px] tracking-widest break-all select-all leading-relaxed uppercase">
-                     {t0.address}
-                   </span>
+                    >
+                      {copied0 ? <Check size={10} /> : <Copy size={10} />}
+                    </button>
+                  </div>
+                  <span className="text-white/40 text-[9px] tracking-widest break-all select-all leading-relaxed uppercase">
+                    {t0.address}
+                  </span>
                 </div>
               </div>
 
               <div className="flex items-start gap-4 pt-4 border-t border-white/[0.03] group/t1">
                 <span className="text-white/20 text-[10px] font-black w-6">[1]</span>
                 <div className="flex flex-col gap-1 flex-1">
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-2">
-                       <span className="text-white text-[10px] font-black uppercase">{t1.symbol}</span>
-                       <span className="text-white/20 text-[8px] uppercase tracking-widest font-black">Token1</span>
-                     </div>
-                     <button 
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white text-[10px] font-black uppercase">{t1.symbol}</span>
+                      <span className="text-white/20 text-[8px] uppercase tracking-widest font-black">Token1</span>
+                    </div>
+                    <button
                       onClick={() => copyToClipboard(t1.address || '', false)}
                       className={`transition-colors p-1 ${copied1 ? 'text-primary' : 'text-white/10 hover:text-primary'}`}
                       title="Copy Address"
-                     >
-                       {copied1 ? <Check size={10} /> : <Copy size={10} />}
-                     </button>
-                   </div>
-                   <span className="text-white/40 text-[9px] tracking-widest break-all select-all leading-relaxed uppercase">
-                     {t1.address}
-                   </span>
+                    >
+                      {copied1 ? <Check size={10} /> : <Copy size={10} />}
+                    </button>
+                  </div>
+                  <span className="text-white/40 text-[9px] tracking-widest break-all select-all leading-relaxed uppercase">
+                    {t1.address}
+                  </span>
                 </div>
               </div>
             </div>
@@ -175,30 +175,29 @@ export default function CreatePoolPage() {
               <button
                 key={tier.label}
                 onClick={() => setFeeTier(tier.label)}
-                className={`flex flex-col text-left transition-all relative overflow-hidden group border-t-2 ${
-                  feeTier === tier.label
+                className={`flex flex-col text-left transition-all relative overflow-hidden group border-t-2 ${feeTier === tier.label
                     ? 'bg-white/[0.04] border-primary shadow-[inset_0_0_20px_rgba(255,210,23,0.05)]'
                     : 'bg-white/[0.01] border-white/5 hover:bg-white/[0.02] hover:border-white/10'
-                }`}
+                  }`}
               >
                 <div className="p-6 pb-2">
                   <span className={`text-3xl font-black tracking-tighter block leading-none ${feeTier === tier.label ? 'text-primary' : 'text-white'}`}>
                     {tier.label}
                   </span>
                 </div>
-                
+
                 <div className="mt-auto border-t border-white/[0.03] p-4 bg-white/[0.01] flex flex-col gap-1.5">
-                   <div className="flex items-center justify-between">
-                      <span className={`text-[8px] font-black tracking-widest uppercase ${feeTier === tier.label ? 'text-white' : 'text-white/20'}`}>
-                        {tier.sub}
-                      </span>
-                      {feeTier === tier.label && (
-                        <Check size={8} className="text-primary" />
-                      )}
-                   </div>
-                   <span className={`text-[9px] font-mono tracking-widest uppercase ${feeTier === tier.label ? 'text-primary' : 'text-white/10'}`}>
-                     Tick Spacing: {tier.spacing}
-                   </span>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[8px] font-black tracking-widest uppercase ${feeTier === tier.label ? 'text-white' : 'text-white/20'}`}>
+                      {tier.sub}
+                    </span>
+                    {feeTier === tier.label && (
+                      <Check size={8} className="text-primary" />
+                    )}
+                  </div>
+                  <span className={`text-[9px] font-mono tracking-widest uppercase ${feeTier === tier.label ? 'text-primary' : 'text-white/10'}`}>
+                    Tick Spacing: {tier.spacing}
+                  </span>
                 </div>
 
                 {feeTier === tier.label && (
@@ -220,36 +219,35 @@ export default function CreatePoolPage() {
               <button
                 key={opt}
                 onClick={() => setStartingRatio(opt)}
-                className={`px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all border ${
-                  startingRatio === opt
+                className={`px-6 py-3 text-[9px] font-black uppercase tracking-widest transition-all border ${startingRatio === opt
                     ? 'bg-primary/20 border-primary text-white'
                     : 'bg-white/[0.02] border-white/5 text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
-                }`}
+                  }`}
               >
                 {opt}
               </button>
             ))}
           </div>
-          
+
           {startingRatio === 'CUSTOM' && (
             <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 bg-white/[0.02] border border-white/5 p-6 animate-in fade-in slide-in-from-top-2 duration-300">
-               <div className="space-y-2">
-                 <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenA.symbol}</p>
-                 <input
-                   className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
-                   type="text"
-                   defaultValue="1.0"
-                 />
-               </div>
-               <span className="text-primary font-black text-2xl mt-4">:</span>
-               <div className="space-y-2">
-                 <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenB.symbol}</p>
-                 <input
-                   className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
-                   type="text"
-                   defaultValue="1.0"
-                 />
-               </div>
+              <div className="space-y-2">
+                <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenA.symbol}</p>
+                <input
+                  className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
+                  type="text"
+                  defaultValue="1.0"
+                />
+              </div>
+              <span className="text-primary font-black text-2xl mt-4">:</span>
+              <div className="space-y-2">
+                <p className="text-[8px] font-black uppercase tracking-widest text-white/20 text-center">{tokenB.symbol}</p>
+                <input
+                  className="w-full bg-transparent border-b border-white/10 py-2 text-center focus:outline-none focus:border-primary transition-all font-black text-2xl text-white uppercase"
+                  type="text"
+                  defaultValue="1.0"
+                />
+              </div>
             </div>
           )}
         </div>

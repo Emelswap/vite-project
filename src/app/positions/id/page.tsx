@@ -55,13 +55,13 @@ export default function PositionDetailsPage() {
           <div className="flex -space-x-4 scale-125">
             {position.imgs.map((img, i) => (
               <div key={i} className="w-12 h-12 rounded-full border-[3px] border-black bg-black overflow-hidden relative z-[5-i]">
-                <img alt="token" className="w-full h-full object-contain" src={img}/>
+                <img alt="token" className="w-full h-full object-contain" src={img} />
               </div>
             ))}
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-black text-white tracking-tighter uppercase">{position.pair}</h1>
+              <h1 className="text-3xl font-black text-white tracking-tighter uppercase">{position.pair}</h1>
               <span className="text-xs font-black bg-white/10 text-white/60 px-3 py-1 rounded-full uppercase tracking-widest">{position.fee}</span>
             </div>
             <div className="flex items-center gap-3 mt-2">
@@ -73,22 +73,21 @@ export default function PositionDetailsPage() {
           </div>
         </div>
         <div className="flex gap-3 relative">
-          <button 
+          <button
             onClick={() => {
               setActiveModal('collect');
               setIsCollectingFees(true);
               setManageOpen(false);
             }}
-            className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 border ${
-              isCollectingFees 
-                ? 'bg-primary/20 text-white border-primary ring-1 ring-primary/20' 
-                : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-            }`}
+            className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 border ${isCollectingFees
+              ? 'bg-primary/20 text-white border-primary ring-1 ring-primary/20'
+              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+              }`}
           >
             Collect Fees
           </button>
-          
-          <button 
+
+          <button
             onClick={() => {
               setManageOpen(!manageOpen);
               setIsCollectingFees(false);
@@ -104,46 +103,43 @@ export default function PositionDetailsPage() {
       {/* Expanded Manage Actions */}
       {manageOpen && (
         <div className="flex flex-wrap gap-4 mb-12 p-1 bg-white/[0.03] border border-white/5 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-300">
-          <button 
+          <button
             onClick={() => {
               setSelectedAction('increase');
               setActiveModal('increase');
             }}
-            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
-              selectedAction === 'increase' 
-                ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
-                : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
-            }`}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${selectedAction === 'increase'
+              ? 'bg-primary/20 border-primary ring-1 ring-primary/20'
+              : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
+              }`}
           >
             <ArrowUpCircle size={16} className={`transition-colors ${selectedAction === 'increase' ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
             <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'increase' ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>Increase Position</span>
           </button>
-          
-          <button 
+
+          <button
             onClick={() => {
               setSelectedAction('decrease');
               setActiveModal('decrease');
             }}
-            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
-              selectedAction === 'decrease' 
-                ? 'bg-primary/20 border-primary ring-1 ring-primary/20' 
-                : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
-            }`}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${selectedAction === 'decrease'
+              ? 'bg-primary/20 border-primary ring-1 ring-primary/20'
+              : 'bg-white/5 border-white/10 hover:bg-primary/10 hover:border-primary/30'
+              }`}
           >
             <ArrowDownCircle size={16} className={`transition-colors ${selectedAction === 'decrease' ? 'text-primary' : 'text-white/20 group-hover:text-primary'}`} />
             <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'decrease' ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>Decrease Position</span>
           </button>
-          
-          <button 
+
+          <button
             onClick={() => {
               setSelectedAction('burn');
               setActiveModal('burn');
             }}
-            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${
-              selectedAction === 'burn' 
-                ? 'bg-red-500/20 border-red-500 ring-1 ring-red-500/20' 
-                : 'bg-red-500/[0.03] border-red-500/10 hover:bg-red-500/10 hover:border-red-500/30'
-            }`}
+            className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 px-6 py-4 rounded-xl border transition-all group ${selectedAction === 'burn'
+              ? 'bg-red-500/20 border-red-500 ring-1 ring-red-500/20'
+              : 'bg-red-500/[0.03] border-red-500/10 hover:bg-red-500/10 hover:border-red-500/30'
+              }`}
           >
             <Flame size={16} className={`transition-colors ${selectedAction === 'burn' ? 'text-red-400' : 'text-red-400/40 group-hover:text-red-400'}`} />
             <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${selectedAction === 'burn' ? 'text-white' : 'text-red-400/60 group-hover:text-white'}`}>Burn Position</span>
@@ -156,8 +152,8 @@ export default function PositionDetailsPage() {
         <div className="glass-morphism bg-white/[0.01] border border-white/5 p-8 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-primary/5 blur-[80px] rounded-full pointer-events-none transition-colors group-hover:bg-primary/10"></div>
           <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-6">Total Liquidity</p>
-          <p className="text-5xl font-black tracking-tighter text-white mb-8">{position.liquidity}</p>
-          
+          <p className="text-3xl font-black tracking-tighter text-white mb-8">{position.liquidity}</p>
+
           <div className="space-y-4 relative z-10">
             <div className="flex justify-between items-center py-4 border-t border-white/5">
               <div className="flex items-center gap-3">
@@ -189,11 +185,11 @@ export default function PositionDetailsPage() {
             <p className="text-[10px] uppercase tracking-widest text-white/30 font-black">Unclaimed Fees</p>
             <RefreshCw size={14} className="text-white/20" />
           </div>
-          <p className="text-5xl font-black tracking-tighter text-emerald-400 mb-8">{position.unclaimedFees}</p>
-          
+          <p className="text-3xl font-black tracking-tighter text-emerald-400 mb-8">{position.unclaimedFees}</p>
+
           <div className="space-y-4 relative z-10">
-             {/* Mock fees list */}
-             <div className="flex justify-between items-center py-4 border-t border-white/5">
+            {/* Mock fees list */}
+            <div className="flex justify-between items-center py-4 border-t border-white/5">
               <span className="text-sm font-black text-white/60">ETH</span>
               <span className="text-sm font-black text-white">0.042 ETH</span>
             </div>
@@ -208,18 +204,18 @@ export default function PositionDetailsPage() {
       {/* Range Section */}
       <div className="glass-morphism bg-white/[0.01] border border-white/5 p-8">
         <p className="text-[10px] uppercase tracking-widest text-white/30 font-black mb-8 text-center">Price Range</p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="text-center p-6 bg-white/[0.02] border border-white/5">
             <p className="text-[9px] uppercase tracking-widest text-white/20 font-black mb-2">Min Price</p>
             <p className="text-3xl font-black text-white leading-none">{position.range.min}</p>
             <p className="text-[9px] text-white/40 uppercase mt-2">USDC per ETH</p>
           </div>
-          
+
           <div className="text-center p-8 bg-primary/5 border border-primary/20 rounded-2xl relative shadow-[0_0_30px_rgba(255,210,23,0.05)]">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-black text-[8px] font-black px-3 py-1 uppercase tracking-[0.2em] rounded-full">Current Market</div>
             <p className="text-[9px] uppercase tracking-widest text-primary/40 font-black mb-2">Current Price</p>
-            <p className="text-4xl font-black text-primary">{position.range.current}</p>
+            <p className="text-3xl font-black text-primary">{position.range.current}</p>
             <p className="text-[9px] text-primary/40 uppercase mt-1">USDC per ETH</p>
           </div>
 
@@ -243,7 +239,7 @@ export default function PositionDetailsPage() {
 
       {/* Transaction History Section */}
       <div className="mt-12">
-        <button 
+        <button
           onClick={() => setHistoryOpen(!historyOpen)}
           className="flex items-center gap-3 group outline-none"
         >
@@ -275,7 +271,7 @@ export default function PositionDetailsPage() {
                     <div className="text-[11px] font-black text-white group-hover:text-primary transition-colors uppercase tracking-tight">{tx.action}</div>
                     <div className="text-[11px] font-black text-white">{tx.value}</div>
                     <div className="text-right">
-                      <a 
+                      <a
                         href={`https://testnet.arcscan.app/tx/${tx.hash}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -296,13 +292,13 @@ export default function PositionDetailsPage() {
       {/* Collect Fees Modal */}
       {activeModal === 'collect' && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={() => setActiveModal(null)}
           ></div>
-          
+
           <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
-            <button 
+            <button
               onClick={() => setActiveModal(null)}
               className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
             >
@@ -319,26 +315,26 @@ export default function PositionDetailsPage() {
             <div className="w-full flex-1 flex flex-col justify-center space-y-4">
               <div className="bg-white/[0.02] border border-white/5 p-6">
                 <p className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-6 text-center">Unclaimed Earnings</p>
-                
+
                 <div className="space-y-6">
                   <div className="flex justify-between items-center px-4">
                     <div className="flex items-center gap-4">
-                       <img src={position.imgs[0]} className="w-6 h-6 border border-white/10" />
-                       <div>
-                         <p className="text-xs font-black text-white uppercase">0.042 ETH</p>
-                         <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Ethereum</p>
-                       </div>
+                      <img src={position.imgs[0]} className="w-6 h-6 border border-white/10" />
+                      <div>
+                        <p className="text-xs font-black text-white uppercase">0.042 ETH</p>
+                        <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Ethereum</p>
+                      </div>
                     </div>
                     <span className="text-[10px] font-mono text-white/40">$130.00</span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center px-4">
                     <div className="flex items-center gap-4">
-                       <img src={position.imgs[1]} className="w-6 h-6 border border-white/10" />
-                       <div>
-                         <p className="text-xs font-black text-white uppercase">12.50 USDC</p>
-                         <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">USD Coin</p>
-                       </div>
+                      <img src={position.imgs[1]} className="w-6 h-6 border border-white/10" />
+                      <div>
+                        <p className="text-xs font-black text-white uppercase">12.50 USDC</p>
+                        <p className="text-[8px] font-mono text-white/20 uppercase tracking-widest">USD Coin</p>
+                      </div>
                     </div>
                     <span className="text-[10px] font-mono text-white/40">$12.50</span>
                   </div>
@@ -352,7 +348,7 @@ export default function PositionDetailsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 w-full mt-6">
-              <button 
+              <button
                 onClick={() => setActiveModal(null)}
                 className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all"
               >
@@ -369,13 +365,13 @@ export default function PositionDetailsPage() {
       {/* Increase Position Modal */}
       {activeModal === 'increase' && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={() => setActiveModal(null)}
           ></div>
-          
+
           <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
-            <button 
+            <button
               onClick={() => setActiveModal(null)}
               className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
             >
@@ -397,13 +393,12 @@ export default function PositionDetailsPage() {
                   <div className="flex items-center gap-3">
                     <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: {token0.balance} {token0.symbol}</span>
                     <div className="flex gap-2">
-                       {[25, 50, 75, 100].map(p => (
-                        <button 
-                          key={p} 
+                      {[25, 50, 75, 100].map(p => (
+                        <button
+                          key={p}
                           onClick={() => setIncreasePercent0(p)}
-                          className={`text-[9px] font-black uppercase transition-colors ${
-                            increasePercent0 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
-                          }`}
+                          className={`text-[9px] font-black uppercase transition-colors ${increasePercent0 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
+                            }`}
                         >
                           {p === 100 ? 'MAX' : `${p}%`}
                         </button>
@@ -412,12 +407,12 @@ export default function PositionDetailsPage() {
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <input 
-                    type="number" 
-                    placeholder="0.0" 
+                  <input
+                    type="number"
+                    placeholder="0.0"
                     className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
                   />
-                  <TokenSelector 
+                  <TokenSelector
                     selectedToken={token0}
                     onSelect={setToken0}
                     tokens={TOKENS}
@@ -433,12 +428,11 @@ export default function PositionDetailsPage() {
                     <span className="text-[9px] font-black uppercase tracking-widest text-white/30">Bal: {token1.balance} {token1.symbol}</span>
                     <div className="flex gap-2">
                       {[25, 50, 75, 100].map(p => (
-                        <button 
-                          key={p} 
+                        <button
+                          key={p}
                           onClick={() => setIncreasePercent1(p)}
-                          className={`text-[9px] font-black uppercase transition-colors ${
-                            increasePercent1 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
-                          }`}
+                          className={`text-[9px] font-black uppercase transition-colors ${increasePercent1 === p ? 'text-primary' : 'text-white/20 hover:text-white/40'
+                            }`}
                         >
                           {p === 100 ? 'MAX' : `${p}%`}
                         </button>
@@ -447,12 +441,12 @@ export default function PositionDetailsPage() {
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <input 
-                    type="number" 
-                    placeholder="0.0" 
+                  <input
+                    type="number"
+                    placeholder="0.0"
                     className="bg-transparent text-xl font-black text-white outline-none w-1/2 uppercase"
                   />
-                  <TokenSelector 
+                  <TokenSelector
                     selectedToken={token1}
                     onSelect={setToken1}
                     tokens={TOKENS}
@@ -479,7 +473,7 @@ export default function PositionDetailsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 w-full mt-6">
-              <button 
+              <button
                 onClick={() => setActiveModal(null)}
                 className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all font-black"
               >
@@ -496,13 +490,13 @@ export default function PositionDetailsPage() {
       {/* Decrease Position Modal */}
       {activeModal === 'decrease' && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={() => setActiveModal(null)}
           ></div>
-          
+
           <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-primary/30 p-10 shadow-[0_0_50px_rgba(255,210,23,0.1)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
-            <button 
+            <button
               onClick={() => setActiveModal(null)}
               className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
             >
@@ -518,27 +512,26 @@ export default function PositionDetailsPage() {
 
             <div className="w-full flex-1 flex flex-col justify-center space-y-6">
               <div className="text-center">
-                <span className="text-4xl font-black text-white tracking-tighter">{decreasePercent}%</span>
+                <span className="text-3xl font-black text-white tracking-tighter">{decreasePercent}%</span>
                 <div className="flex justify-center gap-2 mt-6">
                   {[25, 50, 75, 100].map((p) => (
-                    <button 
+                    <button
                       key={p}
                       onClick={() => setDecreasePercent(p)}
-                      className={`px-3 py-1.5 border text-[8px] font-black uppercase tracking-widest transition-all ${
-                        decreasePercent === p 
-                        ? 'bg-primary text-black border-primary' 
+                      className={`px-3 py-1.5 border text-[8px] font-black uppercase tracking-widest transition-all ${decreasePercent === p
+                        ? 'bg-primary text-black border-primary'
                         : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10'
-                      }`}
+                        }`}
                     >
                       {p === 100 ? 'MAX' : `${p}%`}
                     </button>
                   ))}
                 </div>
                 <div className="px-10 mt-6 md:mt-10">
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="100" 
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
                     value={decreasePercent}
                     onChange={(e) => setDecreasePercent(parseInt(e.target.value))}
                     className="w-full h-1 bg-white/10 appearance-none outline-none accent-primary cursor-pointer"
@@ -566,7 +559,7 @@ export default function PositionDetailsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 w-full mt-6">
-              <button 
+              <button
                 onClick={() => setActiveModal(null)}
                 className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all font-black"
               >
@@ -584,13 +577,13 @@ export default function PositionDetailsPage() {
       {/* Burn Modal */}
       {activeModal === 'burn' && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center px-6">
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={() => setActiveModal(null)}
           ></div>
-          
+
           <div className="relative w-full max-w-lg h-[90vh] glass-morphism bg-[#0A0A0A] border border-red-500/30 p-10 shadow-[0_0_50px_rgba(239,68,68,0.15)] animate-in zoom-in-95 duration-300 flex flex-col items-center">
-            <button 
+            <button
               onClick={() => setActiveModal(null)}
               className="absolute top-6 right-6 text-white/20 hover:text-white transition-colors"
             >
@@ -611,24 +604,24 @@ export default function PositionDetailsPage() {
                   <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Tokens to Claim</span>
                   <Wallet size={10} className="text-white/20" />
                 </div>
-                
+
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                       <img src={position.imgs[0]} className="w-4 h-4" />
-                       <span className="text-[11px] font-black text-white">12.442 ETH</span>
+                      <img src={position.imgs[0]} className="w-4 h-4" />
+                      <span className="text-[11px] font-black text-white">12.442 ETH</span>
                     </div>
                     <span className="text-[9px] font-mono text-white/30">$25,262.50</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                       <img src={position.imgs[1]} className="w-4 h-4" />
-                       <span className="text-[11px] font-black text-white">17,742.92 USDC</span>
+                      <img src={position.imgs[1]} className="w-4 h-4" />
+                      <span className="text-[11px] font-black text-white">17,742.92 USDC</span>
                     </div>
                     <span className="text-[9px] font-mono text-white/30">$17,742.92</span>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-end">
                   <span className="text-[8px] font-black uppercase tracking-widest text-white/30">Total Value</span>
                   <span className="text-xl font-black text-white tracking-tight">$43,005.42</span>
@@ -644,7 +637,7 @@ export default function PositionDetailsPage() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 w-full mt-6">
-              <button 
+              <button
                 onClick={() => setActiveModal(null)}
                 className="py-4 bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/60 hover:bg-white/10 transition-all"
               >

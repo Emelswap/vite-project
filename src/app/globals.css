@@ -12,6 +12,9 @@
   --font-outfit: "Outfit", sans-serif;
   --font-raleway: "Raleway", sans-serif;
   --font-sora: "Sora", sans-serif;
+  --font-lato: "Lato", sans-serif;
+  --font-dm-sans: "DM Sans", sans-serif;
+  
   --radius-sm: 0px;
   --radius-md: 0px;
   --radius-lg: 0px;
@@ -30,7 +33,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-raleway);
+  font-family: var(--font-outfit);
   -webkit-font-smoothing: antialiased;
 }
 
