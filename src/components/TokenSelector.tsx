@@ -83,10 +83,7 @@ const TokenSelector: React.FC<TokenSelectorProps> = ({
             </button>
             
             <div className="flex flex-col items-center text-center mt-6 w-full">
-              <h2 className="text-xl font-black text-white uppercase tracking-tighter mb-1 font-black">Select Token</h2>
-              <p className="text-[9px] text-white/40 font-medium uppercase tracking-[0.2em] mb-8">
-                CHOOSE AN ASSET TO CONTINUE.
-              </p>
+              <h2 className="text-xl font-black text-white tracking-tighter mb-4 font-black">Select a token</h2>
 
               <div className="w-full relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />

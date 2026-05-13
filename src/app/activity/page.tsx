@@ -77,7 +77,7 @@ export default function ActivityPage() {
             <span className="bg-primary text-black text-[10px] px-2 py-0.5 rounded-full font-black">24</span>
           </button>
         </div>
-        <button className="bg-primary text-black px-5 py-2.5 rounded-full font-black text-[10px] tracking-[0.1em] flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg gold-glow mb-4">
+        <button className="bg-primary text-black px-5 py-2 rounded-full font-black text-[10px] tracking-[0.1em] flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg gold-glow mb-4">
           <span className="material-symbols-outlined text-sm font-bold">download</span>
           EXPORT CSV
         </button>

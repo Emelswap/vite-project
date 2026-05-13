@@ -56,11 +56,6 @@ export default function CreatePositionPage() {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/5 blur-[150px] rounded-full pointer-events-none group-hover/page:bg-primary/10 transition-colors duration-1000"></div>
       <div className="absolute bottom-40 left-0 w-[300px] h-[300px] bg-primary/5 blur-[120px] rounded-full pointer-events-none"></div>
 
-      <Link to="/positions" className="flex items-center gap-2 text-white/40 hover:text-white transition-all mb-8 group w-fit">
-        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-        <span className="text-[10px] font-black uppercase tracking-widest">Back to Positions</span>
-      </Link>
-
       {/* Header */}
       <div className="flex flex-col gap-2 mb-12">
         <h1 className="text-3xl font-black text-white tracking-tighter leading-none">Mint Position</h1>
@@ -305,7 +300,7 @@ export default function CreatePositionPage() {
 
         {/* Primary Action Button */}
         <div className="pt-4">
-          <button className="w-full bg-primary text-black font-black tracking-[0.2em] uppercase py-6 text-[10px] gold-glow hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+          <button className="w-full bg-primary text-black font-black tracking-[0.2em] uppercase py-4 text-[10px] gold-glow hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
             Mint Position
           </button>
         </div>

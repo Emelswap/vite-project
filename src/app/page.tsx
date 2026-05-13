@@ -84,7 +84,7 @@ export default function SwapPage() {
           </div>
 
           {/* Swap Button */}
-          <button className="w-full mt-6 py-5 rounded-xl bg-primary text-black font-black text-[10px] uppercase tracking-[0.3em] transition-all gold-glow hover:brightness-110 active:scale-[0.98]">
+          <button className="w-full mt-6 py-4 rounded-xl bg-primary text-black font-black text-[10px] uppercase tracking-[0.3em] transition-all gold-glow hover:brightness-110 active:scale-[0.98]">
             SWAP
           </button>
         </div>
