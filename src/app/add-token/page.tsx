@@ -9,6 +9,7 @@ import { uploadLogo, addToken } from '@/lib/tokenActions';
 export default function AddToken() {
   const { isConnected, chainId: currentChainId } = useAccount();
   const { switchChainAsync } = useSwitchChain();
+  
 
   const [address, setAddress] = useState('');
   const [chainId] = useState('5042002');
