@@ -1,1 +1,0 @@
-import{nn as e,rn as t}from"./ccip-B0s9EJQ8.js";function n(e){return e?`${e.slice(0,5)}…${e.slice(-4)}`:``}function r({wei:t,precision:n=3}){return parseFloat(e(t)).toFixed(n).replace(/0+$/,``).replace(/\.$/,``)}function i({amount:e,decimals:n}){return t(BigInt(e),n)}export{n,r,i as t};
